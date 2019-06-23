@@ -23,4 +23,18 @@ class HotelTest extends TestCase
             ->assertJson($fakeHotelData);
     }
 
+    /**
+     * show Hotels Test.
+     * @test
+     * @return void
+     */
+    public function it_can_show_hotel_details()
+    {
+        $fakeHotel = factory(Hotel::class)->create();
+        $this->assertDatabaseHas('hotels', $fakeHotel->toArray());
+        $this->get(route('hotels.show', ['hotel_id' => $fakeHotel->id]))
+            ->assertStatus(200)
+            ->assertJson($fakeHotel->toArray());
+
+    }
 }

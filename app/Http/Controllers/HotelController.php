@@ -42,12 +42,12 @@ class HotelController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Hotel  $hotel
+     * @param  int  $hotel_id
      * @return \Illuminate\Http\Response
      */
-    public function show(Hotel $hotel)
+    public function show(int $hotel_id)
     {
-        //
+        return Hotel::find($hotel_id);
     }
 
     /**
