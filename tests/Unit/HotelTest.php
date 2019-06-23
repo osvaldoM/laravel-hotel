@@ -1,0 +1,26 @@
+<?php
+
+namespace Tests\Unit;
+
+use App\Hotel;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class HotelTest extends TestCase
+{
+    /**
+     * save Hotels Test.
+     * @test
+     * @return void
+     */
+    public function it_can_create_an_hotel()
+    {
+        $fakeHotelData = factory(Hotel::class)->make()->toArray();
+
+        $this->post(route('hotels.store'), $fakeHotelData)
+            ->assertStatus(201)
+            ->assertJson($fakeHotelData);
+    }
+
+}
