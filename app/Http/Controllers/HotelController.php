@@ -35,7 +35,6 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         return Hotel::create($request->all(), 201);
     }
 
@@ -45,9 +44,9 @@ class HotelController extends Controller
      * @param  int  $hotel_id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $hotel_id)
+    public function show(Hotel $hotel)
     {
-        return Hotel::find($hotel_id);
+        return $hotel;
     }
 
     /**
@@ -70,7 +69,9 @@ class HotelController extends Controller
      */
     public function update(Request $request, Hotel $hotel)
     {
-        //
+        if($hotel->update($request->all())) {
+            return response()->json($hotel);
+        }
     }
 
     /**

@@ -14,7 +14,7 @@ class HotelTest extends TestCase
      * @test
      * @return void
      */
-    public function it_can_create_an_hotel()
+    public function it_can_create_a_hotel()
     {
         $fakeHotelData = factory(Hotel::class)->make()->toArray();
 
@@ -35,6 +35,24 @@ class HotelTest extends TestCase
         $this->get(route('hotels.show', ['hotel_id' => $fakeHotel->id]))
             ->assertStatus(200)
             ->assertJson($fakeHotel->toArray());
+
+    }
+
+    /**
+     * show Hotels Test.
+     * @test
+     * @return void
+     */
+    public function it_can_update_a_hotel()
+    {
+        $fakeHotel = factory(Hotel::class)->create();
+        $newHotelData = [
+            'name' => $this->faker->city ." hotel",
+            'country' => $this->faker->country
+        ];
+        $this->put(route('hotels.update', ['hotel_id' => $fakeHotel->id]), $newHotelData)
+            ->assertStatus(200)
+            ->assertJson($newHotelData);
 
     }
 }
