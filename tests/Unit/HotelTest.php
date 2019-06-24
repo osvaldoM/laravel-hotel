@@ -16,11 +16,11 @@ class HotelTest extends TestCase
      */
     public function it_can_create_a_hotel()
     {
-        $fakeHotelData = factory(Hotel::class)->make()->toArray();
+        $fake_hotel_data = factory(Hotel::class)->make()->toArray();
 
-        $this->post(route('hotels.store'), $fakeHotelData)
+        $this->post(route('hotels.store'), $fake_hotel_data)
             ->assertStatus(201)
-            ->assertJson($fakeHotelData);
+            ->assertJson($fake_hotel_data);
     }
 
     /**
@@ -30,29 +30,29 @@ class HotelTest extends TestCase
      */
     public function it_can_show_hotel_details()
     {
-        $fakeHotel = factory(Hotel::class)->create();
-        $this->assertDatabaseHas('hotels', $fakeHotel->toArray());
-        $this->get(route('hotels.show', ['hotel_id' => $fakeHotel->id]))
+        $fake_hotel = factory(Hotel::class)->create();
+        $this->assertDatabaseHas('hotels', $fake_hotel->toArray());
+        $this->get(route('hotels.show', ['hotel_id' => $fake_hotel->id]))
             ->assertStatus(200)
-            ->assertJson($fakeHotel->toArray());
+            ->assertJson($fake_hotel->toArray());
 
     }
 
     /**
-     * show Hotels Test.
+     * update Hotels Test.
      * @test
      * @return void
      */
     public function it_can_update_a_hotel()
     {
-        $fakeHotel = factory(Hotel::class)->create();
-        $newHotelData = [
+        $fake_hotel = factory(Hotel::class)->create();
+        $new_hotel_data = [
             'name' => $this->faker->city ." hotel",
             'country' => $this->faker->country
         ];
-        $this->put(route('hotels.update', ['hotel_id' => $fakeHotel->id]), $newHotelData)
+        $this->put(route('hotels.update', ['hotel_id' => $fake_hotel->id]), $new_hotel_data)
             ->assertStatus(200)
-            ->assertJson($newHotelData);
+            ->assertJson($new_hotel_data);
 
     }
 }
