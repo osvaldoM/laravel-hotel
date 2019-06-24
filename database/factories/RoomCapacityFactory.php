@@ -2,11 +2,11 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\RoomType;
+use App\RoomCapacity;
 use Faker\Generator as Faker;
 
-$factory->define(RoomType::class, function (Faker $faker) {
+$factory->define(RoomCapacity::class, function (Faker $faker) {
     return [
-        'name' => 'Presidential'
+        'name' => 'Double'
     ];
 });
