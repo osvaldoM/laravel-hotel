@@ -16,9 +16,7 @@ class RoomTypeTest extends TestCase
      */
     public function it_can_create_a_room_type()
     {
-        $fake_room_type_data = [
-            'name' => 'Double'
-        ];
+        $fake_room_type_data = factory(RoomType::class)->make()->toArray();
 
         $this->post(route('room_types.store'), $fake_room_type_data)
             ->assertStatus(201)
