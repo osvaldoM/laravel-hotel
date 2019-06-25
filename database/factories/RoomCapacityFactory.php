@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(RoomCapacity::class, function (Faker $faker) {
     return [
-        'name' => 'Double'
+        'name' => $faker->randomElement(['Double', 'Single', 'Family'])
     ];
 });

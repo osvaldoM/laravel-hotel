@@ -11,15 +11,15 @@ class RoomCapacitySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('room_type')->insert([
+        DB::table('room_capacities')->insert([
             [
-                name => 'Single'
+                'name' => 'Single'
             ],
             [
-                name => 'Double'
+                'name' => 'Double'
             ],
             [
-                name => 'Family'
+                'name' => 'Family'
             ]
         ]);
     }

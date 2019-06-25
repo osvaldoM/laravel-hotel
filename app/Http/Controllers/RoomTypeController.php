@@ -35,7 +35,7 @@ class RoomTypeController extends Controller
      */
     public function store(Request $request)
     {
-        return RoomType::create($request->all(), 201);
+        return RoomType::firstOrCreate(['name' => $request->name], $request->all(), 201);
     }
 
     /**

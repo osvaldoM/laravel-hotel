@@ -11,12 +11,12 @@ class RoomTypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('room_type')->insert([
+        DB::table('room_types')->insert([
             [
-                name => 'Deluxe'
+                'name' => 'Deluxe'
             ],
             [
-                name => 'Standard'
+                'name' => 'Standard'
             ]
         ]);
     }
