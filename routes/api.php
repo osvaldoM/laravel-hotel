@@ -21,4 +21,5 @@ Route::group(['prefix' => 'v1'], function () {
     Route::resource('hotels', HotelController::class);
     Route::resource('room_types', RoomTypeController::class);
     Route::resource('room_capacities', RoomCapacityController::class);
+    Route::resource('rooms', RoomController::class);
 });
