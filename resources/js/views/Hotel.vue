@@ -1,15 +1,28 @@
 <template>
     <div>
-        Here are the cars
+        <div class="hotels" v-for="hotel in hotels">
+            {{hotel.name}}
+        </div>
     </div>
 </template>
 
 <script>
     export default {
+        data() {
+            return {
+                hotels: []
+            }
+        },
         mounted() {
-            console.log('View mounted.');
+            this.loadHotels();
         },
         methods: {
+            loadHotels: function(event) {
+                axios.get('/api/v1/hotels')
+                    .then( res => {
+                        this.hotels = res.data;
+                })
+            }
         }
     }
 </script>
