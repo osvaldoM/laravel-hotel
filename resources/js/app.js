@@ -13,7 +13,8 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
 import App from './views/App'
-import Hotel from './views/Hotel'
+import Hotel from './views/Hotel';
+import HotelDetails from './views/HotelDetails'
 
 const router = new VueRouter({
     mode: 'history',
@@ -22,6 +23,12 @@ const router = new VueRouter({
             path: '/home',
             name: 'home',
             component: Hotel
+        },
+        {
+            path: '/hotel',
+            name: 'hotelDetails',
+            component: HotelDetails,
+            props: true
         },
     ],
 });

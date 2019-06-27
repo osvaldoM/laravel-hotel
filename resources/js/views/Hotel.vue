@@ -26,7 +26,7 @@
                     <td>{{hotel.zip_code}}</td>
                     <td>{{hotel.email}}</td>
                     <td>
-                        <button class="btn btn-secondary"><span class="oi oi-pencil"></span></button>
+                        <router-link :to="{name:'hotelDetails', params: {hotel: hotel}}" class="btn btn-secondary"><span class="oi oi-pencil"></span></router-link>
                         <button class="btn btn-danger"> <span class="oi oi-delete"></span> </button>
                     </td>
                 </tr>
