@@ -63,9 +63,14 @@
             }
         },
         mounted(){
-
+            this.loadHotelIfEmpty();
         },
         methods: {
+            loadHotelIfEmpty() {
+                if(!this.hotel) {
+                    axios.get(`/api/v1/hotels/${this.$route.params.id}`).then( res => this.hotel = res.data)
+                }
+            },
             updateHotel(event) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
