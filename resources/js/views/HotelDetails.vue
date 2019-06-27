@@ -6,6 +6,7 @@
 
             <form method="PUT" v-bind:action="'api/v1/hotels/' + hotel.id" v-on:submit="updateHotel">
                 <input type="hidden" name="id" v-model="hotel.id">
+                <input type="hidden" name="_method" value="PUT">
                 <div class="form-group">
                     <label for="hotel-name">Name</label>
                     <input name="name" type="text" class="form-control" id="hotel-name" placeholder="Hotel name" v-model="hotel.name">
@@ -70,10 +71,11 @@
                 event.stopImmediatePropagation();
 
                 let form = event.target;
-               let formData = new FormData(form);
-               console.log(formData.getAll('name'), event.target);
+                let formData = new FormData(form);
 
-               axios.put(form.getAttribute('action'), formData)
+               axios.post(form.getAttribute('action'), formData).then( res => {
+                   console.log('hotel updated')
+               })
             }
         }
     }
