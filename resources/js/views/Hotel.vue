@@ -1,7 +1,37 @@
 <template>
     <div>
+        <h1> Hotels </h1>
+        <hr/>
         <div class="hotels" v-for="hotel in hotels">
-            {{hotel.name}}
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Hotel Name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Zip code</th>
+                    <th scope="col">Email address</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">{{hotel.id}}</th>
+                    <td>{{hotel.name}}</td>
+                    <td>{{hotel.city}}</td>
+                    <td>{{hotel.state}}</td>
+                    <td>{{hotel.country}}</td>
+                    <td>{{hotel.zip_code}}</td>
+                    <td>{{hotel.email}}</td>
+                    <td>
+                        <button class="btn btn-secondary"><span class="oi oi-pencil"></span></button>
+                        <button class="btn btn-danger"> <span class="oi oi-delete"></span> </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>

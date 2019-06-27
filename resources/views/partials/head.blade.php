@@ -11,6 +11,7 @@
 <!-- Styles -->
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
+<link href="{{ asset('css/font/open-iconic/font/css/open-iconic-bootstrap.css') }}" rel="stylesheet">
 
 
 <title>{{ config('app.name', 'codelineChallenge') }} - @yield('title') </title>
