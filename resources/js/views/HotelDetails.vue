@@ -42,8 +42,10 @@
                     <input name="email" type="text" class="form-control" id="hotel-email" placeholder="Hotel email address" v-model="hotel.email">
                 </div>
                 <div class="form-group">
-                    <label for="hotel-image"></label>
-                    <input name="image" type="text" class="form-control" id="hotel-image" placeholder="Hotel " v-model="hotel.image">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile02">
+                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update hotel details</button>

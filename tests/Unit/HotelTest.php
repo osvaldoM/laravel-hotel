@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Hotel;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,11 +18,17 @@ class HotelTest extends TestCase
      */
     public function it_can_create_a_hotel()
     {
-        $fake_hotel_data = factory(Hotel::class)->make()->toArray();
+        $images_folder_path = 'images/hotels';
 
-        $this->post(route('hotels.store'), $fake_hotel_data)
+        $fake_hotel_data = factory(Hotel::class)->make()->toArray();
+        $image_to_upload = UploadedFile::fake()->image('');
+        $file_name = $image_to_upload->hashName();
+        $fake_hotel_data['image_name'] = $file_name;
+
+        $this->post(route('hotels.store'), array_merge($fake_hotel_data, ['image' => $image_to_upload]))
             ->assertStatus(201)
             ->assertJson($fake_hotel_data);
+        Storage::disk('local')->assertExists($images_folder_path . '/'. $file_name);
     }
 
     /**
@@ -30,7 +38,12 @@ class HotelTest extends TestCase
      */
     public function it_can_show_hotel_details()
     {
+        $images_folder_path = 'images/hotels';
+
+        Storage::fake($images_folder_path);
+
         $fake_hotel = factory(Hotel::class)->create();
+
         $this->assertDatabaseHas('hotels', $fake_hotel->toArray());
         $this->get(route('hotels.show', ['hotel_id' => $fake_hotel->id]))
             ->assertStatus(200)

@@ -15,6 +15,6 @@ $factory->define(Hotel::class, function (Faker $faker) {
         'zip_code' => $this->faker->postcode,
         'phone_number' => $this->faker->phoneNumber,
         'email' => $this->faker->email,
-        'image' => $this->faker->word
+        'image_name' => $this->faker->word . '.' . $this->faker->randomElement(['jpg', 'png', 'jpeg', 'bmp', 'gif', 'gif', 'svg'])
     ];
 });

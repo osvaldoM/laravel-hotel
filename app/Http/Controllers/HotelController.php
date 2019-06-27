@@ -35,7 +35,18 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-        return Hotel::create($request->all(), 201);
+        $request_data = $request->all();
+        $images_folder_path = 'images/hotels';
+
+        if(!empty($request->image)) {
+            $file = $request->file('image');
+            $filename = $file->hashName();
+
+            $file->storeAs($images_folder_path, $filename);
+            $request_data['image_name'] = $filename;
+        }
+
+        return Hotel::create($request_data, 201);
     }
 
     /**

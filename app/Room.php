@@ -11,6 +11,6 @@ class Room extends Model
         'hotel_id',
         'room_type_id',
         'room_capacity_id',
-        'image'
+        'image_name'
     ];
 }
