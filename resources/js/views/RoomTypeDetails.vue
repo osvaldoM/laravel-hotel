@@ -23,36 +23,18 @@
                         <button type="submit" class="btn btn-primary">Update Room Type details</button>
                     </form>
                 </div>
-            </div>
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <!--<form method="PUT" v-bind:action="'/api/v1/roomTypes/' + hotel.id" v-on:submit="updatePricing">-->
-
-                <!--<div class="form-group">-->
-                <!--<label for="rack-rate">Rack rate</label>-->
-                <!--<input name="rack_rate" type="text" class="form-control" id="rack-rate" placeholder="Rack rate" v-model="pricing.rack_rate">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                <!--<label for="min-stay-length">Mininum Length of Stay</label>-->
-                <!--<input name="min_stay_length" type="text" class="form-control" id="min-stay-length" placeholder="Mininum Length of Stay" v-model="pricing.min_stay_length">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                <!--<label for="max-stay-length">Maximum Length of Stay</label>-->
-                <!--<input name="max_stay_length" type="text" class="form-control" id="max-stay-length" placeholder="Maximum Length of Stay" v-model="pricing.max_stay_length">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                <!--<label for="services">Services</label>-->
-                <!--<input name="services" type="text" class="form-control" id="services" placeholder="Services" v-model="pricing.services">-->
-
-                <!--<button type="submit" class="btn btn-primary">Update hotel pricing</button>-->
-                <!--</div>-->
-                <!--</form>-->
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <pricing-details v-bind:room_type_id="roomType.id"></pricing-details>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import PricingDetails from "./PricingDetails";
     export default {
+        components: {PricingDetails},
         props: {
             'roomType': Object
         },

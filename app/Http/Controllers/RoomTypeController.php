@@ -86,4 +86,8 @@ class RoomTypeController extends Controller
             return response()->json($room_type);
         };
     }
+
+    public function pricing(RoomType $room_type){
+        return $room_type->pricing;
+    }
 }

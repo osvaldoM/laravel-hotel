@@ -9,4 +9,9 @@ class RoomType extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function pricing()
+    {
+        return $this->hasOne('App\Pricing','room_type_id');
+    }
 }
