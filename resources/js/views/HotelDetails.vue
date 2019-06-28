@@ -4,7 +4,7 @@
         <hr/>
         <div v-if="hotel" class="hotel-details">
 
-            <form method="PUT" v-bind:action="'api/v1/hotels/' + hotel.id" v-on:submit="updateHotel">
+            <form method="PUT" v-bind:action="'/api/v1/hotels/' + hotel.id" v-on:submit="updateHotel">
                 <input type="hidden" name="id" v-model="hotel.id">
                 <input type="hidden" name="_method" value="PUT">
                 <div class="form-group">
@@ -43,9 +43,13 @@
                 </div>
                 <div class="form-group">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile02">
-                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+                        <input name="image" type="file" class="custom-file-input" id="hotel-image" accept="image/*" v-on:change="previewImage" >
+                        <label class="custom-file-label" for="hotel-image">Choose file</label>
                     </div>
+                    <output class="image-preview-container col-4">
+                        <img :src="previewUrl" v-if="previewUrl" class="image-preview">
+                        <p v-else>No image...</p>
+                    </output>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update hotel details</button>
@@ -61,7 +65,7 @@
         },
         data() {
             return {
-
+                previewUrl: ''
             }
         },
         mounted(){
@@ -81,8 +85,29 @@
                 let formData = new FormData(form);
 
                axios.post(form.getAttribute('action'), formData).then( res => {
-                   console.log('hotel updated')
+                   this.$toasted.show('Hotel details updated', {
+                       duration: 5000,
+                       type: 'success'
+                   });
                })
+                   .catch((error) => {
+                       this.toasted.show('Error updating Hotel');
+                   })
+            },
+            previewImage: function (event) {
+                const file = event.target.files[0];
+                if (!file) {
+                    return false
+                }
+                if (!file.type.match('image.*')) {
+                    return false
+                }
+                const reader = new FileReader();
+                const that = this;
+                reader.onload = function (e) {
+                    that.previewUrl = e.target.result
+                };
+                reader.readAsDataURL(file)
             }
         }
     }

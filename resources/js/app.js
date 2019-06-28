@@ -9,8 +9,13 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router'
+// register the plugin on vue
+import Toasted from 'vue-toasted';
 
 Vue.use(VueRouter);
+Vue.use(Toasted, {
+    router: VueRouter
+});
 
 import App from './views/App'
 import Hotel from './views/Hotel';
@@ -44,6 +49,11 @@ const app = new Vue({
     router,
 });
 
+// ensure file input name is updated
+$(document).on('change', '.custom-file-input', function(){
+    let fileName = $(this).val().split('\\').pop();
+    $(this).next('.custom-file-label').html(fileName);
+});
 // Menu Toggle
 $(".menu-toggle").on('click', function(e) {
     e.preventDefault();

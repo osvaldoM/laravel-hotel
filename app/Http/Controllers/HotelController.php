@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class HotelController extends Controller
 {
+
+    private $images_folder_path = 'images/hotels';
     /**
      * Display a listing of the resource.
      *
@@ -36,13 +38,12 @@ class HotelController extends Controller
     public function store(Request $request)
     {
         $request_data = $request->all();
-        $images_folder_path = 'images/hotels';
 
         if(!empty($request->image)) {
             $file = $request->file('image');
             $filename = $file->hashName();
 
-            $file->storeAs($images_folder_path, $filename);
+            $file->storeAs($this->images_folder_path, $filename);
             $request_data['image_name'] = $filename;
         }
 
@@ -80,7 +81,16 @@ class HotelController extends Controller
      */
     public function update(Request $request, Hotel $hotel)
     {
-        if($hotel->update($request->all())) {
+        $request_data = $request->all();
+
+        if(!empty($request->image)) {
+            $file = $request->file('image');
+            $filename = $file->hashName();
+
+            $file->storeAs($this->images_folder_path, $filename);
+            $request_data['image_name'] = $filename;
+        }
+        if($hotel->update($request_data)) {
             return response()->json($hotel);
         }
     }
