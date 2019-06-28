@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HotelController extends Controller
 {
 
-    private $images_folder_path = 'images/hotels';
+    private $images_folder_path = 'images/hotels/';
     /**
      * Display a listing of the resource.
      *
@@ -95,14 +96,7 @@ class HotelController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Hotel  $hotel
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Hotel $hotel)
-    {
-        //
+    public function showImage($image_name) {
+        return Storage::download("$this->images_folder_path$image_name");
     }
 }

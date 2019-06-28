@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label for="hotel-country"> Country</label>
                     <input name="country" type="text" class="form-control" id="hotel-country" placeholder="Hotel country" v-model="hotel.country">
-                </div>
+                +</div>
                 <div class="form-group">
                     <label for="hotel-zip-code">Zip code</label>
                     <input name="zip_code" type="text" class="form-control" id="hotel-zip-code" placeholder="Hotel Zip code" v-model="hotel.zip_code">
@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <div class="custom-file">
                         <input name="image" type="file" class="custom-file-input" id="hotel-image" accept="image/*" v-on:change="previewImage" >
-                        <label class="custom-file-label" for="hotel-image">Choose file</label>
+                        <label class="custom-file-label" for="hotel-image">Change image</label>
                     </div>
                     <output class="image-preview-container col-4">
                         <img :src="previewUrl" v-if="previewUrl" class="image-preview">
@@ -69,6 +69,7 @@
             }
         },
         mounted(){
+            // this.previewUrl = `/hotels/images/${this.hotel.image_name}`;
             this.loadHotelIfEmpty();
         },
         methods: {
@@ -108,6 +109,11 @@
                     that.previewUrl = e.target.result
                 };
                 reader.readAsDataURL(file)
+            }
+        },
+        watch: {
+            hotel: function (hotel){
+                this.previewUrl = `/hotels/images/${hotel.image_name}`
             }
         }
     }

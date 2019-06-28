@@ -18,7 +18,7 @@ class HotelTest extends TestCase
      */
     public function it_can_create_a_hotel()
     {
-        $images_folder_path = 'images/hotels';
+        $images_folder_path = 'images/hotels/';
 
         $fake_hotel_data = factory(Hotel::class)->make()->toArray();
         $image_to_upload = UploadedFile::fake()->image('');
@@ -28,7 +28,7 @@ class HotelTest extends TestCase
         $this->post(route('hotels.store'), array_merge($fake_hotel_data, ['image' => $image_to_upload]))
             ->assertStatus(201)
             ->assertJson($fake_hotel_data);
-        Storage::disk('local')->assertExists($images_folder_path . '/'. $file_name);
+        Storage::disk('local')->assertExists("$images_folder_path$file_name");
     }
 
     /**
