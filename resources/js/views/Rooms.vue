@@ -1,8 +1,8 @@
 <template>
     <div>
-        <h1> Room Types </h1>
+        <h1> Rooms </h1>
         <hr/>
-        <div class="hotels" >
+        <div class="rooms" >
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
@@ -12,11 +12,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="roomType in roomTypes">
-                    <th scope="row">{{roomType.id}}</th>
-                    <td>{{roomType.name}}</td>
+                <tr v-for="room in rooms">
+                    <th scope="row">{{room.id}}</th>
+                    <td>{{room.name}}</td>
                     <td class="text-sm-right">
-                        <router-link :to="{name:'roomTypeDetails', params: {id: roomType.id, roomType: roomType}}" class="btn btn-secondary"><span class="oi oi-pencil"></span></router-link>
+                        <router-link :to="{name:'roomTypeDetails', params: {id: room.id, roomType: room}}" class="btn btn-secondary"><span class="oi oi-pencil"></span></router-link>
                         <button class="btn btn-danger"> <span class="oi oi-delete"></span> </button>
                     </td>
                 </tr>
@@ -38,9 +38,9 @@
         },
         methods: {
             loadRoomTypes: function(event) {
-                axios.get('/api/v1/room_types')
+                axios.get('/api/v1/rooms')
                     .then( res => {
-                        this.roomTypes = res.data;
+                        this.rooms = res.data;
                     })
             }
         }
