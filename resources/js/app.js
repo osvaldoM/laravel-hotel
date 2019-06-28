@@ -21,7 +21,7 @@ import App from './views/App'
 import Hotel from './views/Hotel';
 import HotelDetails from './views/HotelDetails'
 import RoomType from './views/RoomTypes';
-
+import RoomTypeDetails from './views/RoomTypeDetails'
 const router = new VueRouter({
     mode: 'history',
     routes: [
@@ -31,7 +31,7 @@ const router = new VueRouter({
             component: Hotel
         },
         {
-            path: '/hotel/:id',
+            path: '/hotels/:id',
             name: 'hotelDetails',
             component: HotelDetails,
             props: true
@@ -40,6 +40,12 @@ const router = new VueRouter({
             path: '/room-types',
             name: 'roomType',
             component: RoomType
+        },
+        {
+            path: '/room-types/:id',
+            name: 'roomTypeDetails',
+            component: RoomTypeDetails,
+            props: true
         },
     ],
 });

@@ -69,7 +69,6 @@
             }
         },
         mounted(){
-            // this.previewUrl = `/hotels/images/${this.hotel.image_name}`;
             this.loadHotelIfEmpty();
         },
         methods: {
