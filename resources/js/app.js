@@ -28,6 +28,7 @@ const router = new VueRouter({
         {
             path: '/',
             name: 'home',
+            alias: '/hotels',
             component: Hotel
         },
         {
