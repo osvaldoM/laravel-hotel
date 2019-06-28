@@ -20,12 +20,13 @@ Vue.use(Toasted, {
 import App from './views/App'
 import Hotel from './views/Hotel';
 import HotelDetails from './views/HotelDetails'
+import RoomType from './views/RoomTypes';
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/home',
+            path: '/',
             name: 'home',
             component: Hotel
         },
@@ -34,6 +35,11 @@ const router = new VueRouter({
             name: 'hotelDetails',
             component: HotelDetails,
             props: true
+        },
+        {
+            path: '/room-types',
+            name: 'roomType',
+            component: RoomType
         },
     ],
 });
