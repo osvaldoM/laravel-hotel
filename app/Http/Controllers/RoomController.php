@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
+    private $images_folder_path = 'images/rooms/';
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +37,17 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        return Room::create($request->all(), 201);
+        $request_data = $request->all();
+
+        if(!empty($request->image)) {
+            $file = $request->file('image');
+            $filename = $file->hashName();
+
+            $file->storeAs($this->images_folder_path, $filename);
+            $request_data['image_name'] = $filename;
+        }
+
+        return Room::create($request_data, 201);
     }
 
     /**
@@ -69,7 +81,16 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        if($room->update($request->all())) {
+        $request_data = $request->all();
+
+        if(!empty($request->image)) {
+            $file = $request->file('image');
+            $filename = $file->hashName();
+
+            $file->storeAs($this->images_folder_path, $filename);
+            $request_data['image_name'] = $filename;
+        }
+        if($room->update($request_data)) {
             return response()->json($room);
         }
     }
@@ -85,5 +106,9 @@ class RoomController extends Controller
         if($room->delete()) {
             return response()->json($room);
         };
+    }
+
+    public function showImage($image_name) {
+        return Storage::download("$this->images_folder_path$image_name");
     }
 }

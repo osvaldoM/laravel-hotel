@@ -16,7 +16,7 @@
                     <th scope="row">{{room.id}}</th>
                     <td>{{room.name}}</td>
                     <td class="text-sm-right">
-                        <router-link :to="{name:'roomTypeDetails', params: {id: room.id, roomType: room}}" class="btn btn-secondary"><span class="oi oi-pencil"></span></router-link>
+                        <router-link :to="{name:'roomDetails', params: {id: room.id, room: room}}" class="btn btn-secondary"><span class="oi oi-pencil"></span></router-link>
                         <button class="btn btn-danger"> <span class="oi oi-delete"></span> </button>
                     </td>
                 </tr>
