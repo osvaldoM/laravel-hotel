@@ -30,7 +30,7 @@
     export default {
         data() {
             return {
-                rooms: []
+                roomTypes: []
             }
         },
         mounted() {
