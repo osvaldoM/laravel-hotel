@@ -38,6 +38,19 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'country' => 'required',
+            'zip_code' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required|email',
+            'image' => 'nullable|file',
+            'image_name' => 'nullable |'
+        ]);
+
         $request_data = $request->all();
 
         if(!empty($request->image)) {
@@ -82,6 +95,18 @@ class HotelController extends Controller
      */
     public function update(Request $request, Hotel $hotel)
     {
+        $validatedData = $request->validate([
+            'name' => 'nullable',
+            'address' => 'nullable',
+            'city' => 'nullable',
+            'state' => 'nullable',
+            'country' => 'nullable',
+            'zip_code' => 'nullable',
+            'phone_number' => 'nullable',
+            'email' => 'nullable|email',
+            'image' => 'nullable|file',
+            'image_name' => 'nullable'
+        ]);
         $request_data = $request->all();
 
         if(!empty($request->image)) {
