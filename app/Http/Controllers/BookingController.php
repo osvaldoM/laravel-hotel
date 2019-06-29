@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
+use App\Room;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -44,6 +50,37 @@ class BookingController extends Controller
             'user_id' => 'nullable|numeric',
             'room_id' => 'required|numeric',
         ]);
+
+
+        $start_date = Carbon::parse($request->start_date);
+        $end_date = Carbon::parse($request->end_date);
+
+        if($start_date->greaterThan($end_date)) {
+            $returnData = array(
+                'status' => 'error',
+                'message' => 'Checkin date cannot be larger than checkout date!'
+            );
+            return response()->json($returnData, 500);
+        }
+
+        $invalid_bookings = DB::table('bookings')
+            ->whereBetween('start_date', [$start_date->addDays(-1)->toDateTimeString(), $end_date->toDateTimeString()])
+        ->orWhereBetween('end_date', [$start_date->toDateTimeString(), $end_date->addDays(+1)])
+        ->get();
+
+
+        if(!empty($invalid_bookings)) {
+            $returnData = array(
+                'status' => 'error',
+                'message' => 'Attempting to book room in occupied dates!'
+            );
+            return response()->json($returnData, 500);
+        }
+
+        if(Auth::user()) {
+            $request->merge(['user_id'=> Auth::user()->id]);
+        }
+
         return Booking::create($request->all(), 201);
     }
 
@@ -87,6 +124,35 @@ class BookingController extends Controller
             'user_id' => 'nullable|numeric',
             'room_id' => 'nullable|numeric',
         ]);
+
+        $start_date = Carbon::parse($request->start_date || $booking->start_date);
+        $end_date = Carbon::parse($request->end_date || $booking->end_date);
+
+        if($start_date->greaterThan($end_date)) {
+            $returnData = array(
+                'status' => 'error',
+                'message' => 'Checkin date cannot be larger than checkout date!'
+            );
+            return response()->json($returnData, 500);
+        }
+
+        $invalid_bookings = DB::table('bookings')
+            ->whereBetween('start_date', [$start_date->addDays(-1)->toDateTimeString(), $end_date->toDateTimeString()])
+            ->orWhereBetween('end_date', [$start_date->toDateTimeString(), $end_date->addDays(+1)])
+            ->get();
+
+
+        if(!empty($invalid_bookings)) {
+            $returnData = array(
+                'status' => 'error',
+                'message' => 'Attempting to book room in occupied dates!'
+            );
+            return response()->json($returnData, 500);
+        }
+
+        if(Auth::user()) {
+            $request->merge(['user_id'=> Auth::user()->id]);
+        }
         if($booking->update($request->all())) {
             return response()->json($booking);
         }

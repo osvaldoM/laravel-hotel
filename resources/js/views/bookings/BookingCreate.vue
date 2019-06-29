@@ -63,11 +63,16 @@
                 let formData = new FormData(form);
 
                 axios.post(form.getAttribute('action'), formData).then(res => {
-                    this.$toasted.show('Booking created', {
-                        duration: 3000,
-                        type: 'success'
-                    });
-                    this.$router.push({ name:'bookingDetails', params: {id: res.data.id, booking: res.data }});
+
+                    if(res.id){
+                        this.$toasted.show('Booking created', {
+                            duration: 3000,
+                            type: 'success'
+                        });
+                        this.$router.push({ name:'bookingDetails', params: {id: res.data.id, booking: res.data }});
+                    }
+                    else
+                        throw new Error('invalid response');
                 })
                     .catch((error) => {
                         this.$toasted.show('Error updating Booking' + error.message);
