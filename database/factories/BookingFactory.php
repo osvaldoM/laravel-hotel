@@ -12,8 +12,8 @@ $factory->define(Booking::class, function (Faker $faker) {
 
             return $room->id;
         },
-        'start_date' => '2011-01-01',
-        'end_date' =>  '2011-01-05',
+        'start_date' => \Carbon\CarbonImmutable::now()->toDateTimeString(),
+        'end_date' =>  \Carbon\CarbonImmutable::now()->addDays(3)->toDateTimeString(),
         'customer_full_name' => $faker->name,
         'customer_email' => $faker->email,
         'user_id' => function() {
