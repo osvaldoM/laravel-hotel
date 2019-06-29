@@ -4,9 +4,10 @@
         <hr/>
         <div v-if="pricing" class="room-type-details">
 
-            <form method="PUT" v-bind:action="'/api/v1/pricings/' + pricing.id" v-on:submit="updatePricing">
-                <input type="hidden" name="id" v-model="pricing.id">
-                <input type="hidden" name="_method" value="PUT">
+            <form v-bind:method="pricing.id ? 'PUT' : 'POST'" v-bind:action="'/api/v1/pricings/' + (pricing.id || '')" v-on:submit="updatePricing">
+                <input v-if="pricing.id" type="hidden" name="id" v-model="pricing.id">
+                <input v-if="!pricing.id" type="hidden" name="room_type_id" v-model="room_type_id">
+                <input v-if="pricing.id" type="hidden" name="_method" value="PUT">
 
                 <div class="form-group">
                     <label for="rack-rate">Rack rate</label>
@@ -40,7 +41,8 @@
         },
         data(){
             return {
-                pricing: {}
+                pricing: {
+                }
             }
         },
         mounted(){
@@ -58,13 +60,13 @@
                 let formData = new FormData(form);
 
                 axios.post(form.getAttribute('action'), formData).then(res => {
-                    this.$toasted.show('Room type details updated', {
+                    this.$toasted.show('Room type pricing details updated', {
                         duration: 5000,
                         type: 'success'
                     });
                 })
                     .catch((error) => {
-                        this.toasted.show('Error updating Room type');
+                        this.$toasted.show('Error updating Room type');
                     })
             }
         }

@@ -3,6 +3,9 @@
         <h1> Room Types </h1>
         <hr/>
         <div class="hotels" >
+            <div class="text-sm-right add-item">
+                <router-link :to="{name:'roomTypeCreate'}" class="btn btn-primary"><span class="oi oi-plus"></span></router-link>
+            </div>
             <table class="table">
                 <thead class="thead-dark">
                 <tr>

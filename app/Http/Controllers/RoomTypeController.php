@@ -88,6 +88,9 @@ class RoomTypeController extends Controller
     }
 
     public function pricing(RoomType $room_type){
-        return $room_type->pricing;
+        if($room_type->pricing) {
+            return $room_type->pricing;
+        }
+        return new RoomType();
     }
 }

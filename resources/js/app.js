@@ -21,6 +21,7 @@ import App from './views/App'
 import Hotel from './views/Hotel';
 import HotelDetails from './views/HotelDetails'
 import RoomType from './views/RoomTypes';
+import RoomTypeCreate from './views/RoomTypeCreate'
 import RoomTypeDetails from './views/RoomTypeDetails'
 import Room from './views/Rooms';
 import RoomDetails from './views/RoomDetails';
@@ -44,6 +45,11 @@ const router = new VueRouter({
             path: '/room-types',
             name: 'roomType',
             component: RoomType
+        },
+        {
+            path: '/room-types/new',
+            name: 'roomTypeCreate',
+            component: RoomTypeCreate
         },
         {
             path: '/room-types/:id',
