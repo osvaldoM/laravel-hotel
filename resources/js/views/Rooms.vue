@@ -15,12 +15,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="room in rooms">
+                <tr v-for="(room, index) in rooms">
                     <th scope="row">{{room.id}}</th>
                     <td>{{room.name}}</td>
                     <td class="text-sm-right">
                         <router-link :to="{name:'roomDetails', params: {id: room.id, room: room}}" class="btn btn-secondary"><span class="oi oi-pencil"></span></router-link>
-                        <button class="btn btn-danger"> <span class="oi oi-delete"></span> </button>
+                        <button class="btn btn-danger" v-on:click="confirmRoomDeletion(room, index)"> <span class="oi oi-delete"></span> </button>
                     </td>
                 </tr>
                 </tbody>
@@ -45,6 +45,34 @@
                     .then( res => {
                         this.rooms = res.data;
                     })
+            },
+            confirmRoomDeletion: function (room, index){
+                this.$toasted.show(`Click here to confirm you want to delete room: ${room.name}`, {
+                    duration: 3000,
+                    type: 'info',
+                    action : {
+                        text : 'delete Room',
+                        onClick : (e, toastObject) => {
+                            toastObject.goAway(0);
+                            this.deleteRoom(room, index);
+                        }
+                    }
+                });
+            },
+            deleteRoom: function (room, index){
+                axios.delete(`api/v1/rooms/${room.id}`).then( res => {
+                    this.$toasted.show('Room deleted', {
+                        duration: 3000,
+                        type: 'success'
+                    });
+                    this.$delete(this.rooms, index);
+                }).
+                    catch(err => {
+                    this.$toasted.show('Failed to delete room', {
+                        duration: 3000,
+                        type: 'error'
+                    });
+                })
             }
         }
     }
