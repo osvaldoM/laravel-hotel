@@ -10,14 +10,18 @@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">ID</th>
-                    <th>Name</th>
+                    <th>Customer name</th>
+                    <th>check in date</th>
+                    <th>check out date</th>
                     <th class="text-sm-right">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(booking, index) in bookings">
                     <th scope="row">{{booking.id}}</th>
-                    <td>{{booking.customer_email}}</td>
+                    <td>{{booking.customer_full_name}}</td>
+                    <td>{{booking.start_date | formatDate}}</td>
+                    <td>{{booking.end_date | formatDate}}</td>
                     <td class="text-sm-right">
                         <router-link :to="{name:'bookingDetails', params: {id: booking.id, booking: booking}}" class="btn btn-secondary"><span class="oi oi-pencil"></span></router-link>
                         <button class="btn btn-danger" v-on:click="confirmBookingDeletion(booking, index)"> <span class="oi oi-delete"></span> </button>

@@ -12,9 +12,17 @@ import VueRouter from 'vue-router'
 // register the plugin on vue
 import Toasted from 'vue-toasted';
 
+import moment from 'moment'
+
 Vue.use(VueRouter);
 Vue.use(Toasted, {
     router: VueRouter
+});
+
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        return moment(String(value)).format('YYYY/MM/DD');
+    }
 });
 
 import App from './views/App'
