@@ -2,19 +2,17 @@
     <div>
         <h1 > Room details </h1>
         <hr/>
-        <div v-if="room" class="room-details">
+        <div class="room-details">
 
-            <form method="PUT" v-bind:action="'/api/v1/rooms/' + room.id" v-on:submit="updateRoom">
-                <input type="hidden" name="id" v-model="room.id">
-                <input type="hidden" name="_method" value="PUT">
+            <form method="POST" v-bind:action="'/api/v1/rooms/'" v-on:submit="createRoom">
                 <div class="form-group">
                     <label for="room-name">Name</label>
                     <input required name="name" type="text" class="form-control" id="room-name" placeholder="Room name" v-model="room.name">
                 </div>
                 <div class="form-group">
-                    <label for="room-type"></label>
-                    <select required name="room_type_id" type="text" class="form-control" id="room-type" placeholder="Room type" v-model="room.room_type_id">
-                        <option v-for="roomType in roomTypes" v-bind:value="roomType.id" v-bind:selected='roomType.id == room.room_type_id'>{{roomType.name}}</option>
+                    <label for="room-type">Room type</label>
+                    <select required name="room_type_id" type="text" class="form-control" id="room-type" placeholder="room type" v-model="room.room_type_id">
+                        <option v-for="roomType in roomTypes" v-bind:value="roomType.id">{{roomType.name}}</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -28,7 +26,7 @@
                     </output>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Update room details</button>
+                <button type="submit" class="btn btn-primary">Add room</button>
             </form>
         </div>
     </div>
@@ -36,27 +34,24 @@
 
 <script>
     export default {
-        props: {
-            'room': Object
-        },
         data() {
             return {
                 previewUrl: '',
-                roomTypes: []
+                roomTypes: [],
+                room: {
+                    name: '',
+
+                }
             }
         },
         mounted(){
-            this.loadRoom();
             this.loadRoomTypes();
         },
         methods: {
-            loadRoom() {
-                return axios.get(`/api/v1/rooms/${this.$route.params.id}`).then( res => this.room = res.data)
-            },
             loadRoomTypes() {
                 return axios.get(`/api/v1/room_types/`).then( res => this.roomTypes = res.data)
             },
-            updateRoom(event) {
+            createRoom(event) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
 
@@ -64,13 +59,14 @@
                 let formData = new FormData(form);
 
                axios.post(form.getAttribute('action'), formData).then( res => {
-                   this.$toasted.show('Room details updated', {
+                   this.$toasted.show('Room created', {
                        duration: 5000,
                        type: 'success'
                    });
+                   this.$router.push({ name:'roomDetails', params: {id: res.data.id, room: res.data }});
                })
                    .catch((error) => {
-                       this.$toasted.show('Error updating Room');
+                       this.$toasted.show('Error adding Room');
                    })
             },
             previewImage: function (event) {
@@ -87,11 +83,6 @@
                     that.previewUrl = e.target.result
                 };
                 reader.readAsDataURL(file)
-            }
-        },
-        watch: {
-            room: function (room){
-                this.previewUrl = `/rooms/images/${room.image_name}`
             }
         }
     }

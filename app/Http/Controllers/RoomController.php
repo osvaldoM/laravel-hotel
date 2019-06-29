@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Hotel;
 use App\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -45,6 +46,9 @@ class RoomController extends Controller
 
             $file->storeAs($this->images_folder_path, $filename);
             $request_data['image_name'] = $filename;
+        }
+        if(empty($request->hotel_id)) {
+            $request_data['hotel_id'] = Hotel::firstOrFail()->id;
         }
 
         return Room::create($request_data, 201);

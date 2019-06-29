@@ -24,6 +24,7 @@ import RoomType from './views/RoomTypes';
 import RoomTypeDetails from './views/RoomTypeDetails'
 import Room from './views/Rooms';
 import RoomDetails from './views/RoomDetails';
+import RoomCreate from './views/RoomCreate';
 const router = new VueRouter({
     mode: 'history',
     routes: [
@@ -54,6 +55,11 @@ const router = new VueRouter({
             path: '/rooms',
             name: 'room',
             component: Room
+        },
+        {
+            path: '/rooms/new',
+            name: 'roomCreate',
+            component: RoomCreate
         },
         {
             path: '/rooms/:id',
