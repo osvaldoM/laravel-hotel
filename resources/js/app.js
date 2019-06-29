@@ -18,14 +18,14 @@ Vue.use(Toasted, {
 });
 
 import App from './views/App'
-import Hotel from './views/Hotel';
-import HotelDetails from './views/HotelDetails'
-import RoomType from './views/RoomTypes';
-import RoomTypeCreate from './views/RoomTypeCreate'
-import RoomTypeDetails from './views/RoomTypeDetails'
-import Room from './views/Rooms';
-import RoomDetails from './views/RoomDetails';
-import RoomCreate from './views/RoomCreate';
+import Hotel from './views/hotels/Hotels';
+import HotelDetails from './views/hotels/HotelDetails'
+import RoomType from './views/room-types/RoomTypes';
+import RoomTypeCreate from './views/room-types/RoomTypeCreate'
+import RoomTypeDetails from './views/room-types/RoomTypeDetails'
+import Room from './views/rooms/Rooms';
+import RoomDetails from './views/rooms/RoomDetails';
+import RoomCreate from './views/rooms/RoomCreate';
 const router = new VueRouter({
     mode: 'history',
     routes: [

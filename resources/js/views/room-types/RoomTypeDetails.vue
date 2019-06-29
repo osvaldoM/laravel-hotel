@@ -32,7 +32,7 @@
 </template>
 
 <script>
-    import PricingDetails from "./PricingDetails";
+    import PricingDetails from "../pricings/PricingDetails";
     export default {
         components: {PricingDetails},
         props: {

@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group">
                     <label for="max-stay-length">Maximum Length of Stay</label>
-                    <input type="number"  name="max_stay_length" class="form-control" id="max-stay-length" placeholder="Maximum Length of Stay"
+                    <input type="number"  v-bind:min="1" name="max_stay_length" class="form-control" id="max-stay-length" placeholder="Maximum Length of Stay"
                            v-model="pricing.max_stay_length">
                 </div>
                 <div class="form-group">
