@@ -17,7 +17,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return response()->json(Room::all());
+        return response()->json(Room::with('roomType', 'roomType.pricing')->get());
     }
 
     /**
