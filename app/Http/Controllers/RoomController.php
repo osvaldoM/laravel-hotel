@@ -130,4 +130,8 @@ class RoomController extends Controller
     public function showImage($image_name) {
         return Storage::download("$this->images_folder_path$image_name");
     }
+
+    public function booked_dates(Room $room) {
+        return $room->bookings;
+    }
 }

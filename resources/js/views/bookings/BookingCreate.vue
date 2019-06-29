@@ -22,11 +22,13 @@
                 </div>
                 <div class="form-group">
                     <label for="start-date">Check In date</label>
-                    <datepicker id="start-date" name="start_date" format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
+                    <datepicker id="start-date" :disabled-dates = "{ranges: booked_dates}"
+                                name="start_date" format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
                 </div>
                 <div class="form-group">
                     <label for="end-date">Check Out date</label>
-                    <datepicker id="end-date" name="end_date"  format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
+                    <datepicker id="end-date" :disabled-dates = "{ranges: booked_dates}"
+                                name="end_date"  format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
                 </div>
 
 
@@ -45,7 +47,8 @@
         data() {
             return {
                 rooms: [],
-                booking: {}
+                booking: {},
+                booked_dates: []
             }
         },
         mounted(){
@@ -64,7 +67,7 @@
 
                 axios.post(form.getAttribute('action'), formData).then(res => {
 
-                    if(res.id){
+                    if(res.data.id){
                         this.$toasted.show('Booking created', {
                             duration: 3000,
                             type: 'success'
@@ -75,8 +78,25 @@
                         throw new Error('invalid response');
                 })
                     .catch((error) => {
-                        this.$toasted.show('Error updating Booking' + error.message);
+                        this.$toasted.show('Error updating Booking' + error.message, {
+                            duration: 3000,
+                            type: 'error'
+                        });
                     })
+            }
+        },
+        watch: {
+            'booking.room_id': function (roomId){
+                return axios.get(`/api/v1/rooms/${roomId}/booked_dates`).then(res => {
+                    let bookedDates = res.data.map((val) => {
+                        return {
+                            from : new Date(val.start_date),
+                            to: new Date(val.end_date)
+                        };
+                    });
+                    this.booked_dates = bookedDates;
+                    console.log(bookedDates);
+                })
             }
         }
     }

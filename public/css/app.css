@@ -11100,3 +11100,22 @@ a.text-dark:focus {
   }
 }
 
+.app-header {
+  height: 60px;
+  margin-bottom: 20px;
+}
+
+.image-preview-container {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.image-preview {
+  max-height: 300px;
+  max-width: 100%;
+}
+
+.add-item {
+  margin-bottom: 20px;
+}
+

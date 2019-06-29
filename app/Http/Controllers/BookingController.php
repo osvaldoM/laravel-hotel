@@ -64,8 +64,8 @@ class BookingController extends Controller
         }
 
         $invalid_bookings = DB::table('bookings')
-            ->whereBetween('start_date', [$start_date->addDays(-1)->toDateTimeString(), $end_date->toDateTimeString()])
-        ->orWhereBetween('end_date', [$start_date->toDateTimeString(), $end_date->addDays(+1)->toDateTimeString()])
+            ->whereBetween('start_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
+        ->orWhereBetween('end_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
         ->get();
 
         if(!$invalid_bookings->isEmpty()) {
@@ -136,8 +136,8 @@ class BookingController extends Controller
         }
 
         $invalid_bookings = DB::table('bookings')
-            ->whereBetween('start_date', [$start_date->addDays(-1)->toDateTimeString(), $end_date->toDateTimeString()])
-            ->orWhereBetween('end_date', [$start_date->toDateTimeString(), $end_date->addDays(+1)])
+            ->whereBetween('start_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
+            ->orWhereBetween('end_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
             ->get();
 
         $not_the_current_book = $invalid_bookings->where('id', '!=', $booking->id);
