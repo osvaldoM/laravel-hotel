@@ -35,6 +35,9 @@ class RoomTypeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string'
+        ]);
         return RoomType::firstOrCreate(['name' => $request->name], $request->all(), 201);
     }
 
@@ -69,6 +72,9 @@ class RoomTypeController extends Controller
      */
     public function update(Request $request, RoomType $room_type)
     {
+        $request->validate([
+            'name' => 'nullable|string'
+        ]);
         if($room_type->update($request->all())) {
             return response()->json($room_type);
         }

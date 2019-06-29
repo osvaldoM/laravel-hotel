@@ -40,6 +40,13 @@ class RoomController extends Controller
     {
         $request_data = $request->all();
 
+        $request->validate([
+            'name' => 'nullable|string',
+            'image_name' => 'nullable|string',
+            'image' => 'nullable|file',
+            'room_type_id' => 'required|numeric',
+            'room_id' => 'nullable|numeric',
+        ]);
         if(!empty($request->image)) {
             $file = $request->file('image');
             $filename = $file->hashName();
@@ -85,6 +92,14 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
+        $request->validate([
+            'name' => 'nullable|string',
+            'image_name' => 'nullable|string',
+            'image' => 'nullable|file',
+            'room_type_id' => 'nullable|numeric',
+            'room_id' => 'nullable|numeric',
+        ]);
+
         $request_data = $request->all();
 
         if(!empty($request->image)) {
