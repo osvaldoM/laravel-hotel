@@ -1,12 +1,10 @@
 <template>
     <div>
-        <h1> Booking details </h1>
+        <h1> New Booking </h1>
         <hr/>
-        <div v-if="booking" class="booking-details">
+        <div class="booking-details">
 
-            <form method="PUT" v-bind:action="'/api/v1/bookings/' + booking.id" v-on:submit="updateBooking">
-                <input type="hidden" name="id" v-model="booking.id">
-                <input type="hidden" name="_method" value="PUT">
+            <form method="POST" v-bind:action="'/api/v1/bookings/'" v-on:submit="createBooking">
                 <div class="form-group">
                     <label for="customer-full-name">Customer full name</label>
                     <input required name="customer_full_name" type="text" class="form-control" id="customer-full-name" placeholder="Customer's full name" v-model="booking.customer_full_name">
@@ -24,15 +22,15 @@
                 </div>
                 <div class="form-group">
                     <label for="start-date">Check In date</label>
-                    <datepicker :value="(booking.start_date)" id="start-date" name="start_date" format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
+                    <datepicker id="start-date" name="start_date" format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
                 </div>
                 <div class="form-group">
                     <label for="end-date">Check Out date</label>
-                    <datepicker :value="(booking.end_date)" id="end-date" name="end_date"  format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
+                    <datepicker id="end-date" name="end_date"  format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
                 </div>
 
 
-                <button type="submit" class="btn btn-primary">Update booking details</button>
+                <button type="submit" class="btn btn-primary">Add booking</button>
             </form>
         </div>
     </div>
@@ -44,27 +42,20 @@
         components: {
             Datepicker
         },
-        props: {
-            'booking': Object
-        },
         data() {
             return {
-                rooms: []
+                rooms: [],
+                booking: {}
             }
         },
         mounted(){
-            this.loadBookingIfEmpty();
             this.loadRooms();
         },
         methods: {
-            loadBookingIfEmpty(){
-                if(!this.booking)
-                    return axios.get(`/api/v1/bookings/${this.$route.params.id}`).then(res => this.booking = res.data)
-            },
             loadRooms(){
                 return axios.get(`/api/v1/rooms/`).then(res => this.rooms = res.data)
             },
-            updateBooking(event){
+            createBooking(event){
                 event.preventDefault();
                 event.stopImmediatePropagation();
 
@@ -72,14 +63,15 @@
                 let formData = new FormData(form);
 
                 axios.post(form.getAttribute('action'), formData).then(res => {
-                    this.$toasted.show('Booking details updated', {
-                        duration: 5000,
+                    this.$toasted.show('Booking created', {
+                        duration: 3000,
                         type: 'success'
                     });
+                    this.$router.push({ name:'bookingDetails', params: {id: res.data.id, booking: res.data }});
                 })
                     .catch((error) => {
-                        this.$toasted.show('Error updating Booking');
-                    });
+                        this.$toasted.show('Error updating Booking' + error.message);
+                    })
             }
         }
     }

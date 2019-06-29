@@ -37,6 +37,7 @@ import RoomCreate from './views/rooms/RoomCreate';
 
 import Booking from './views/bookings/Bookings'
 import BookingDetails from './views/bookings/BookingDetails';
+import BookingCreate from './views/bookings/BookingCreate'
 
 const router = new VueRouter({
     mode: 'history',
@@ -90,11 +91,16 @@ const router = new VueRouter({
             component: Booking
         },
         {
+            path: '/bookings/new',
+            name: 'bookingCreate',
+            component: BookingCreate
+        },
+        {
             path: '/bookings/:id',
             name: 'bookingDetails',
             component: BookingDetails,
             props: true
-        }
+        },
     ],
 });
 /**
