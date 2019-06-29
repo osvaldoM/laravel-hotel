@@ -108,12 +108,12 @@ const router = new VueRouter({
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
 const app = new Vue({
     el: '#app',
     components: { App,},
     router,
 });
+
 
 // ensure file input name is updated
 $(document).on('change', '.custom-file-input', function(){
@@ -126,4 +126,12 @@ $(".menu-toggle").on('click', function(e) {
     e.stopImmediatePropagation();
     $('.wrapper').toggleClass("toggled");
     $('.expand-toggler').toggleClass('hidden');
+});
+
+//some hackery to use vue router outside the context of a vue application
+window.router = router;
+$('.list-group-item').on('click', (event) => {
+    event.preventDefault();
+    const $link = $(event.target);
+    window.router.push($link.attr('href'));
 });

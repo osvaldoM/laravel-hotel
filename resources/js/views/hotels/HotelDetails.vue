@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label for="hotel-country"> Country</label>
                     <input name="country" type="text" class="form-control" id="hotel-country" placeholder="Hotel country" v-model="hotel.country">
-                +</div>
+                </div>
                 <div class="form-group">
                     <label for="hotel-zip-code">Zip code</label>
                     <input name="zip_code" type="text" class="form-control" id="hotel-zip-code" placeholder="Hotel Zip code" v-model="hotel.zip_code">

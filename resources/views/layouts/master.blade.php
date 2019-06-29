@@ -6,7 +6,9 @@
 </head>
 
 <body class="d-flex h-100 wrapper">
-        @include('partials.sidebar')
+        @auth
+            @include('partials.sidebar')
+        @endauth
         <div class="page-content-wrapper d-flex flex-column">
             @include('partials.header')
             <main role="main" class="container-fluid">
