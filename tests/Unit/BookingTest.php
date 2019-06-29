@@ -38,4 +38,22 @@ class BookingTest extends TestCase
             ->assertJson($fake_booking->toArray());
 
     }
+
+    /**
+     * update Pricing Test.
+     * @test
+     * @return void
+     */
+    public function it_can_update_a_booking()
+    {
+        $fake_booking = factory(Booking::class)->create();
+        $new_booking_data = [
+            'customer_email' => $this->faker->email
+        ];
+        $this->put(route('bookings.update', ['booking_id' => $fake_booking->id]), $new_booking_data)
+            ->assertStatus(200)
+            ->assertJson($new_booking_data);
+
+    }
+
 }

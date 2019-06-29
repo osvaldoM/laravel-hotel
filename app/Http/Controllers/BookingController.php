@@ -69,7 +69,9 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        if($booking->update($request->all())) {
+            return response()->json($booking);
+        }
     }
 
     /**
