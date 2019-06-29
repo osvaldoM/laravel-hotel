@@ -11,16 +11,16 @@
 
                 <div class="form-group">
                     <label for="rack-rate">Rack rate</label>
-                    <input name="rack_rate" type="text" class="form-control" id="rack-rate" placeholder="Rack rate" v-model="pricing.rack_rate">
+                    <input name="rack_rate" required type="number" class="form-control" id="rack-rate" placeholder="Rack rate" v-model="pricing.rack_rate">
                 </div>
                 <div class="form-group">
                     <label for="min-stay-length">Mininum Length of Stay</label>
-                    <input type="number" v-bind:min="1" name="min_stay_length" class="form-control" id="min-stay-length" placeholder="Mininum Length of Stay"
+                    <input type="number" v-bind:min="1" required name="min_stay_length" class="form-control" id="min-stay-length" placeholder="Mininum Length of Stay"
                            v-model="pricing.min_stay_length">
                 </div>
                 <div class="form-group">
                     <label for="max-stay-length">Maximum Length of Stay</label>
-                    <input type="number"  v-bind:min="1" name="max_stay_length" class="form-control" id="max-stay-length" placeholder="Maximum Length of Stay"
+                    <input type="number"  v-bind:min="1" required name="max_stay_length" class="form-control" id="max-stay-length" placeholder="Maximum Length of Stay"
                            v-model="pricing.max_stay_length">
                 </div>
                 <div class="form-group">

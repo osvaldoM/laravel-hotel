@@ -17,7 +17,7 @@
                         <input type="hidden" name="_method" value="PUT">
                         <div class="form-group">
                             <label for="room-type-name">Room Type Name</label>
-                            <input name="name" type="text" class="form-control" id="room-type-name" placeholder="Room Type name" v-model="roomType.name">
+                            <input name="name" required type="text" class="form-control" id="room-type-name" placeholder="Room Type name" v-model="roomType.name">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Update Room Type details</button>

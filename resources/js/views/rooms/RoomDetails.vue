@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <div class="custom-file">
-                        <input name="image" type="file" class="custom-file-input" id="room-image" accept="image/*" v-on:change="previewImage" >
+                        <input required name="image" type="file" class="custom-file-input" id="room-image" accept="image/*" v-on:change="previewImage" >
                         <label class="custom-file-label" for="room-image">Change image</label>
                     </div>
                     <output class="image-preview-container col-4">
