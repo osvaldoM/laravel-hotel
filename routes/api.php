@@ -23,6 +23,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::resource('room_capacities', RoomCapacityController::class);
     Route::resource('rooms', RoomController::class);
     Route::resource('pricings', PricingController::class);
+    Route::resource('bookings', BookingController::class);
 
     Route::get('/room_types/{room_type}/pricing', 'RoomTypeController@pricing');
 });

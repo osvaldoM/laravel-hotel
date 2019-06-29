@@ -23,12 +23,6 @@ $factory->define(Room::class, function (Faker $faker) use ($hotel_id) {
             $room_type = \App\RoomType::firstOrCreate(['name' => $room_type_data->name], $room_type_data->toArray());
 
             return $room_type->id;
-        },
-        'room_capacity_id' => function () {
-            $room_capacity_data = factory(\App\RoomCapacity::class)->make();
-            $room_capacity = \App\RoomCapacity::firstOrCreate(['name' => $room_capacity_data->name], $room_capacity_data->toArray());
-
-            return $room_capacity->id;
         }
     ];
 });
