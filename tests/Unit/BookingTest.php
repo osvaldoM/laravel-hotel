@@ -25,7 +25,7 @@ class BookingTest extends TestCase
     }
 
     /**
-     * show Pricing Test.
+     * show Booking Test.
      * @test
      * @return void
      */
@@ -40,7 +40,7 @@ class BookingTest extends TestCase
     }
 
     /**
-     * update Pricing Test.
+     * update Booking Test.
      * @test
      * @return void
      */
@@ -54,6 +54,18 @@ class BookingTest extends TestCase
             ->assertStatus(200)
             ->assertJson($new_booking_data);
 
+    }
+
+    /**
+     * delete Booking Test.
+     * @test
+     * @return void
+     */
+    public function it_can_delete_a_booking() {
+        $fake_booking = factory(Booking::class)->create();
+        $this->delete(route('bookings.destroy', ['booking_id' => $fake_booking->id]))
+            ->assertStatus(200);
+        $this->assertDatabaseMissing('bookings', ['id' => $fake_booking->id]);
     }
 
 }

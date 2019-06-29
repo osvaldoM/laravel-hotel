@@ -56,7 +56,7 @@ class PricingTest extends TestCase
     }
 
     /**
-     * delete RoomType Test.
+     * delete Pricing Test.
      * @test
      * @return void
      */

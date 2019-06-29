@@ -82,6 +82,8 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        if($booking->delete()) {
+            return response()->json($booking);
+        };
     }
 }
