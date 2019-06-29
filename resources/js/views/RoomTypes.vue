@@ -15,12 +15,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="roomType in roomTypes">
+                <tr v-for="(roomType, index) in roomTypes">
                     <th scope="row">{{roomType.id}}</th>
                     <td>{{roomType.name}}</td>
                     <td class="text-sm-right">
                         <router-link :to="{name:'roomTypeDetails', params: {id: roomType.id, roomType: roomType}}" class="btn btn-secondary"><span class="oi oi-pencil"></span></router-link>
-                        <button class="btn btn-danger"> <span class="oi oi-delete"></span> </button>
+                        <button class="btn btn-danger" v-on:click="confirmRoomTypeDeletion(roomType, index)"> <span class="oi oi-delete"></span> </button>
                     </td>
                 </tr>
                 </tbody>
@@ -45,6 +45,34 @@
                     .then( res => {
                         this.roomTypes = res.data;
                     })
+            },
+            confirmRoomTypeDeletion: function (roomType, index){
+                this.$toasted.show(`Click here to confirm you want to delete room type: ${roomType.name}`, {
+                    duration: 3000,
+                    type: 'info',
+                    action : {
+                        text : 'delete Room Type',
+                        onClick : (e, toastObject) => {
+                            toastObject.goAway(0);
+                            this.deleteRoomType(roomType, index);
+                        }
+                    }
+                });
+            },
+            deleteRoomType: function (roomType, index){
+                axios.delete(`api/v1/room_types/${roomType.id}`).then( res => {
+                    this.$toasted.show('Room type deleted', {
+                        duration: 3000,
+                        type: 'success'
+                    });
+                    this.$delete(this.roomTypes, index);
+                }).
+                catch(err => {
+                    this.$toasted.show('Failed to delete room type', {
+                        duration: 3000,
+                        type: 'error'
+                    });
+                })
             }
         }
     }
