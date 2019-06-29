@@ -11,6 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([HotelSeeder::class, RoomTypeSeeder::class, RoomCapacitySeeder::class, RoomSeeder::class]);
+        $this->call([UserSeeder::class, HotelSeeder::class, RoomTypeSeeder::class, PricingSeeder::class, RoomSeeder::class, BookingSeeder::class]);
     }
 }

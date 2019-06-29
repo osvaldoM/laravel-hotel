@@ -26,6 +26,8 @@ import RoomTypeDetails from './views/room-types/RoomTypeDetails'
 import Room from './views/rooms/Rooms';
 import RoomDetails from './views/rooms/RoomDetails';
 import RoomCreate from './views/rooms/RoomCreate';
+
+import Booking from './views/bookings/Bookings'
 const router = new VueRouter({
     mode: 'history',
     routes: [
@@ -71,7 +73,12 @@ const router = new VueRouter({
             path: '/rooms/:id',
             name: 'roomDetails',
             component: RoomDetails
-        }
+        },
+        {
+            path: '/bookings',
+            name: 'bookings',
+            component: Booking
+        },
     ],
 });
 /**
