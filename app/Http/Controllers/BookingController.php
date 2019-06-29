@@ -65,11 +65,10 @@ class BookingController extends Controller
 
         $invalid_bookings = DB::table('bookings')
             ->whereBetween('start_date', [$start_date->addDays(-1)->toDateTimeString(), $end_date->toDateTimeString()])
-        ->orWhereBetween('end_date', [$start_date->toDateTimeString(), $end_date->addDays(+1)])
+        ->orWhereBetween('end_date', [$start_date->toDateTimeString(), $end_date->addDays(+1)->toDateTimeString()])
         ->get();
 
-
-        if(!empty($invalid_bookings)) {
+        if(!$invalid_bookings->isEmpty()) {
             $returnData = array(
                 'status' => 'error',
                 'message' => 'Attempting to book room in occupied dates!'
@@ -125,8 +124,8 @@ class BookingController extends Controller
             'room_id' => 'nullable|numeric',
         ]);
 
-        $start_date = Carbon::parse($request->start_date || $booking->start_date);
-        $end_date = Carbon::parse($request->end_date || $booking->end_date);
+        $start_date = Carbon::parse($request->start_date ?? $booking->start_date);
+        $end_date = Carbon::parse($request->end_date ?? $booking->end_date);
 
         if($start_date->greaterThan($end_date)) {
             $returnData = array(
@@ -141,8 +140,9 @@ class BookingController extends Controller
             ->orWhereBetween('end_date', [$start_date->toDateTimeString(), $end_date->addDays(+1)])
             ->get();
 
+        $not_the_current_book = $invalid_bookings->where('id', '!=', $booking->id);
 
-        if(!empty($invalid_bookings)) {
+        if(!$not_the_current_book->isEmpty()) {
             $returnData = array(
                 'status' => 'error',
                 'message' => 'Attempting to book room in occupied dates!'
