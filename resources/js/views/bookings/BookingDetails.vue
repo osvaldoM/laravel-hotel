@@ -95,8 +95,10 @@
                         };
                     });
                     this.booked_dates = bookedDates;
-                    console.log(bookedDates);
                 })
+            },
+            'booking.start_date': function (start_date){
+                this.booking.end_date = start_date;
             }
         }
     }
