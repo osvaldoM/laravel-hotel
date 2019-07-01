@@ -22,13 +22,13 @@
                 </div>
                 <div class="form-group">
                     <label for="start-date">Check In date</label>
-                    <datepicker id="start-date" :disabled-dates = "{ranges: booked_dates}"
-                                name="start_date" format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
+                    <datepicker id="start-date" :disabled-dates = "{ranges: booked_dates}" v-model="booking.start_date"
+                                name="start_date" format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar" v-bind:value="booking.start_date"></datepicker>
                 </div>
                 <div class="form-group">
                     <label for="end-date">Check Out date</label>
-                    <datepicker id="end-date" :disabled-dates = "{ranges: booked_dates}"
-                                name="end_date"  format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
+                    <datepicker id="end-date" :disabled-dates = "{ranges: booked_dates, from: booking.start_date}"
+                                name="end_date"  format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar" v-bind:value="booking.end_date"></datepicker>
                 </div>
 
 
@@ -95,8 +95,11 @@
                         };
                     });
                     this.booked_dates = bookedDates;
-                    console.log(bookedDates);
                 })
+            },
+            'booking.start_date': function (start_date){
+                console.log(start_date);
+
             }
         }
     }
