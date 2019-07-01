@@ -44,6 +44,12 @@ Start the local development server
 
 You can now access the server at http://localhost:8000
 
+## Login details
+
+ An admin user was created with the following credentials:
+ 
+  - email: **admin@codeline.com**
+  - password: **password**
     
 ## Database seeding
 

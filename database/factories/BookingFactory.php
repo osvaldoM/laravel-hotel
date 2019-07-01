@@ -12,8 +12,11 @@ $factory->define(Booking::class, function (Faker $faker) {
 
             return $room->id;
         },
-        'start_date' => \Carbon\CarbonImmutable::now()->toDateTimeString(),
-        'end_date' =>  \Carbon\CarbonImmutable::now()->addDays(3)->toDateTimeString(),
+        'start_date' => $faker->dateTimeThisMonth('+ 25 days')->format('Y-m-d H:i:s'),
+        'end_date' =>  function($booking) {
+            $start_date = \Carbon\Carbon::parse($booking['start_date']);
+            return $start_date->addDays($this->faker->numberBetween(1,4))->toDateTimeString();
+        },
         'customer_full_name' => $faker->name,
         'customer_email' => $faker->email,
         'user_id' => function() {
