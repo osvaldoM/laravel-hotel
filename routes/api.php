@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::get('/rooms/{room}/booked_dates', 'RoomController@booked_dates');
+    Route::get('/rooms/{room}/room_info', 'RoomController@booked_dates');
     Route::resource('hotels', HotelController::class);
     Route::resource('room_types', RoomTypeController::class);
     Route::resource('room_capacities', RoomCapacityController::class);

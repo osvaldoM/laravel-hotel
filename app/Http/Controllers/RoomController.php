@@ -132,6 +132,8 @@ class RoomController extends Controller
     }
 
     public function booked_dates(Room $room) {
-        return $room->bookings()->select(['start_date', 'end_date'])->get();
+        $booked_dates = $room->bookings()->select(['start_date', 'end_date'])->get();
+        $room_info = $room->load('roomType', 'roomType.pricing');
+        return response()->json(['booked_dates' => $booked_dates, 'room_info' => $room_info]);
     }
 }

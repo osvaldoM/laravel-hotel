@@ -20,18 +20,23 @@
                         <option v-for="room in rooms" v-bind:value="room.id" v-bind:selected='room.id == booking.room_id'>{{room.name}}</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="start-date">Check In date</label>
-                    <datepicker id="start-date" :disabled-dates = "{ranges: booked_dates}" v-model="booking.start_date"
-                                name="start_date" format="yyyy/MM/dd" :bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar" v-bind:value="booking.start_date"></datepicker>
-                </div>
-                <div class="form-group">
-                    <label for="end-date">Check Out date</label>
-                    <datepicker id="end-date" :disabled-dates = "{ranges: booked_dates, to: booking.start_date}"
-                                name="end_date"  format="yyyy/MM/dd" :bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar" v-model="booking.end_date"></datepicker>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="start-date">Check In date</label>
+                        <datepicker id="start-date" :disabled-dates = "{ranges: booked_dates}" v-model="booking.start_date" :inline="true"
+                                    :highlighted="{from:booking.start_date, to: booking.end_date}" name="start_date" format="yyyy/MM/dd"
+                                    :bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="end-date">Check Out date</label>
+                        <datepicker id="end-date" :disabled-dates = "{ranges: booked_dates, to: minDate, from: maxDate}" v-model="booking.end_date"
+                                    :inline =true :highlighted="{from:booking.start_date, to: booking.end_date}" name="end_date"  format="yyyy/MM/dd"
+                                    :bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar" ></datepicker>
+                    </div>
                 </div>
 
-
+                <p>Number of nights: {{numberOfNights}}</p>
+                <p>Total: {{getTotal}} $</p>
                 <button type="submit" class="btn btn-primary">Add booking</button>
             </form>
         </div>
@@ -40,6 +45,7 @@
 
 <script>
     import Datepicker from 'vuejs-datepicker';
+    import moment from 'moment'
     export default {
         components: {
             Datepicker
@@ -47,6 +53,7 @@
         data() {
             return {
                 rooms: [],
+                room: undefined,
                 booking: {},
                 booked_dates: []
             }
@@ -87,19 +94,44 @@
         },
         watch: {
             'booking.room_id': function (roomId){
-                return axios.get(`/api/v1/rooms/${roomId}/booked_dates`).then(res => {
-                    let bookedDates = res.data.map((val) => {
+                return axios.get(`/api/v1/rooms/${roomId}/room_info`).then(res => {
+                    let bookedDates = res.data.booked_dates.map((val) => {
                         return {
                             from : new Date(val.start_date),
                             to: new Date(val.end_date)
                         };
                     });
                     this.booked_dates = bookedDates;
+                    this.room = res.data.room_info
                 })
             },
-            'booking.start_date': function (start_date){
-                this.booking.end_date = start_date;
-                console.log(this.booking.end_date);
+        },
+        computed: {
+            minDate : function (){
+                if(this.booking.start_date && this.room && this.room.room_type && this.room.room_type.pricing){
+                    const minDate =  moment(this.booking.start_date).add(this.room.room_type.pricing.min_stay_length, 'days').toDate();
+                    return minDate;
+                }
+            },
+            maxDate : function (){
+                if(this.booking.start_date && this.room && this.room.room_type && this.room.room_type.pricing){
+                    const maxDate =  moment(this.booking.start_date).add(this.room.room_type.pricing.max_stay_length, 'days').toDate();
+                    return maxDate;
+                }
+            },
+            numberOfNights: function(){
+                if(this.booking.start_date && this.booking.end_date){
+                    const diff = moment(this.booking.end_date).diff(moment(this.booking.start_date), 'days');
+                        if(!diff) {
+                            return 'same day checkout';
+                        }
+                    return `${diff} nights`;
+                }
+            },
+            getTotal: function (){
+                if(this.room && this.room.room_type && this.room.room_type.pricing){
+                    return this.room.room_type.pricing.rack_rate;
+                }
             }
         }
     }
