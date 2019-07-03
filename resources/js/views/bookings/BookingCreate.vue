@@ -90,7 +90,10 @@
                             type: 'error'
                         });
                     })
-            }
+            },
+            daysBetween: function (start_date, end_date){
+                return  Math.abs(moment(start_date).diff(moment(end_date), 'days'));
+            },
         },
         watch: {
             'booking.room_id': function (roomId){
@@ -105,6 +108,17 @@
                     this.room = res.data.room_info
                 })
             },
+            'booking.start_date': function ( start_date){
+                if(this.booking.end_date && this.room && this.room.room_type && this.room.room_type.pricing){
+                    const minDate =  moment(start_date).add(this.room.room_type.pricing.min_stay_length, 'days');
+                    const endDate = moment(this.booking.end_date);
+                    const isValidDate = endDate.isAfter(minDate);
+
+                    if(!isValidDate) {
+                        this.booking.end_date = minDate.toDate();
+                    }
+                }
+            }
         },
         computed: {
             minDate : function (){
@@ -121,7 +135,7 @@
             },
             numberOfNights: function(){
                 if(this.booking.start_date && this.booking.end_date){
-                    const diff = moment(this.booking.end_date).diff(moment(this.booking.start_date), 'days');
+                    const diff = this.daysBetween(this.booking.start_date, this.booking.end_date);
                         if(!diff) {
                             return 'same day checkout';
                         }
@@ -130,7 +144,8 @@
             },
             getTotal: function (){
                 if(this.room && this.room.room_type && this.room.room_type.pricing){
-                    return this.room.room_type.pricing.rack_rate;
+                    const diff = this.daysBetween(this.booking.start_date, this.booking.end_date);
+                    return this.room.room_type.pricing.rack_rate * diff;
                 }
             }
         }
