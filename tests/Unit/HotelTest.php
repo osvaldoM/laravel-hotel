@@ -18,13 +18,12 @@ class HotelTest extends TestCase
      */
     public function it_can_create_a_hotel()
     {
-        $images_folder_path = 'images/hotels/';
+        $images_folder_path = 'app/images/hotels/';
 
         $fake_hotel_data = factory(Hotel::class)->make()->toArray();
         $image_to_upload = UploadedFile::fake()->image('');
         $file_name = $image_to_upload->hashName();
         $fake_hotel_data['image_name'] = $file_name;
-
         $this->post(route('hotels.store'), array_merge($fake_hotel_data, ['image' => $image_to_upload]))
             ->assertStatus(201)
             ->assertJson($fake_hotel_data);
@@ -38,9 +37,6 @@ class HotelTest extends TestCase
      */
     public function it_can_show_hotel_details()
     {
-        $images_folder_path = 'images/hotels';
-
-        Storage::fake($images_folder_path);
 
         $fake_hotel = factory(Hotel::class)->create();
 

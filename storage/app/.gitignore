@@ -1,3 +1,5 @@
 *
 !public/
+!default_images/
 !.gitignore
+!default_images/*.png

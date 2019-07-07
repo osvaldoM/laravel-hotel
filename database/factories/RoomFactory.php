@@ -6,14 +6,13 @@ use App\Room;
 use Faker\Generator as Faker;
 
 
-$hotel_id = $factory->create(\App\Hotel::class)->id;
-$factory->define(Room::class, function (Faker $faker) use ($hotel_id) {
+$factory->define(Room::class, function (Faker $faker) {
     return [
         'name' => $this->faker->regexify('[A-Z]+[0-9]'),
         'image_name' => $this->faker->word . '.' . $this->faker->randomElement(['jpg', 'png', 'jpeg', 'bmp', 'gif', 'gif', 'svg']),
         'hotel_id' => function () {
             // we don't need more than one hotel in the DB , so we get the first record if it exists or create a new one;
-            $hotel = \App\Hotel::firstOrCreate([], factory(\App\Hotel::class)->make()->toArray());
+            $hotel = \App\Hotel::firstOrCreate([], factory(\App\Hotel::class)->state('seeding')->make()->toArray());
 
             return $hotel->id;
         },

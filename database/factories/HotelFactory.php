@@ -5,6 +5,13 @@
 use App\Hotel;
 use Faker\Generator as Faker;
 
+$factory->state(Hotel::class, 'seeding', function (Faker $faker) {
+    $storage_path = Storage::disk()->getAdapter()->getPathPrefix() ;
+    return [
+        'image_name' => $faker->file(storage_path('app/default_images'), $storage_path . 'app/images/hotels', false)
+    ];
+});
+
 $factory->define(Hotel::class, function (Faker $faker) {
     return [
         'name' => $this->faker->city ." hotel",
@@ -15,6 +22,7 @@ $factory->define(Hotel::class, function (Faker $faker) {
         'zip_code' => $this->faker->postcode,
         'phone_number' => $this->faker->phoneNumber,
         'email' => $this->faker->email,
-        'image_name' => $this->faker->word . '.' . $this->faker->randomElement(['jpg', 'png', 'jpeg', 'bmp', 'gif', 'gif', 'svg'])
+        'image_name' => ''
     ];
 });
+

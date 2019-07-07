@@ -11,6 +11,6 @@ class HotelSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Hotel::class)->create();
+        factory(App\Hotel::class)->state('seeding')->create(['name' => 'The Codeline Hotel']);
     }
 }

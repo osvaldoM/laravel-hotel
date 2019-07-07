@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class HotelController extends Controller
 {
 
-    private $images_folder_path = 'images/hotels/';
+    private $images_folder_path = 'app/images/hotels/';
     /**
      * Display a listing of the resource.
      *
@@ -57,7 +57,8 @@ class HotelController extends Controller
             $file = $request->file('image');
             $filename = $file->hashName();
 
-            $file->storeAs($this->images_folder_path, $filename);
+            Storage::disk('local')->put( $this->images_folder_path, $file);
+
             $request_data['image_name'] = $filename;
         }
 

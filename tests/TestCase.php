@@ -19,9 +19,16 @@ abstract class TestCase extends BaseTestCase
      */
     public function setUp(): void
     {
+        $image_directories = [
+            'app/images/hotels',
+            'app/images/rooms'
+        ];
         parent::setUp(); //
         $this->faker = Faker::create();
         Storage::fake('local');
+        foreach ($image_directories as $directory) {
+            Storage::makeDirectory($directory);
+        }
         $this->withoutExceptionHandling();
     }
 
