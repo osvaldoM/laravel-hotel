@@ -56,24 +56,21 @@ class BookingController extends Controller
         $end_date = Carbon::parse($request->end_date);
 
         if($start_date->greaterThan($end_date)) {
-            $returnData = array(
+            $errorMessage = array(
                 'status' => 'error',
-                'message' => 'Checkin date cannot be larger than checkout date!'
+                'message' => 'Check-in date cannot be greater than checkout date!'
             );
-            return response()->json($returnData, 500);
+            return response()->json($errorMessage, 500);
         }
 
-        $invalid_bookings = DB::table('bookings')
-            ->whereBetween('start_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
-        ->orWhereBetween('end_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
-        ->get();
+        $conflicting_bookings = get_conflicting_bookings($start_date, $end_date);
 
-        if(!$invalid_bookings->isEmpty()) {
-            $returnData = array(
+        if(!$conflicting_bookings->isEmpty()) {
+            $errorMessage = array(
                 'status' => 'error',
                 'message' => 'Attempting to book room in occupied dates!'
             );
-            return response()->json($returnData, 500);
+            return response()->json($errorMessage, 500);
         }
 
         if(Auth::user()) {
@@ -128,26 +125,23 @@ class BookingController extends Controller
         $end_date = Carbon::parse($request->end_date ?? $booking->end_date);
 
         if($start_date->greaterThan($end_date)) {
-            $returnData = array(
+            $errorMessage = array(
                 'status' => 'error',
-                'message' => 'Checkin date cannot be larger than checkout date!'
+                'message' => 'Check-in date cannot be greater than checkout date!'
             );
-            return response()->json($returnData, 500);
+            return response()->json($errorMessage, 500);
         }
 
-        $invalid_bookings = DB::table('bookings')
-            ->whereBetween('start_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
-            ->orWhereBetween('end_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
-            ->get();
+        $conflicting_bookings = $this->get_conflicting_bookings($start_date, $end_date);
 
-        $not_the_current_book = $invalid_bookings->where('id', '!=', $booking->id);
+        $conflicting_bookings_without_current_booking = $conflicting_bookings->where('id', '!=', $booking->id);
 
-        if(!$not_the_current_book->isEmpty()) {
-            $returnData = array(
+        if(!$conflicting_bookings_without_current_booking->isEmpty()) {
+            $errorMessage = array(
                 'status' => 'error',
                 'message' => 'Attempting to book room in occupied dates!'
             );
-            return response()->json($returnData, 500);
+            return response()->json($errorMessage, 500);
         }
 
         if(Auth::user()) {
@@ -169,5 +163,11 @@ class BookingController extends Controller
         if($booking->delete()) {
             return response()->json($booking);
         };
+    }
+    private function get_conflicting_bookings($start_date, $end_date) {
+        return DB::table('bookings')
+            ->whereBetween('start_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
+            ->orWhereBetween('end_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
+            ->get();
     }
 }

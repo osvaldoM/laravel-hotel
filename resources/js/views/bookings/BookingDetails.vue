@@ -23,12 +23,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="start-date">Check In date</label>
+                    <label for="start-date">Check-in date</label>
                     <datepicker :value="(booking.start_date)" id="start-date" name="start_date" :disabled-dates = "{ranges: booked_dates}"
                                 format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
                 </div>
                 <div class="form-group">
-                    <label for="end-date">Check Out date</label>
+                    <label for="end-date">Check-out date</label>
                     <datepicker :value="(booking.end_date)" id="end-date" name="end_date" :disabled-dates = "{ranges: booked_dates}"
                                 format="yyyy/MM/dd" bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
                 </div>

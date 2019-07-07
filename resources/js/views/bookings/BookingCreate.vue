@@ -22,13 +22,13 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-6">
-                        <label for="start-date">Check In date</label>
+                        <label for="start-date">Check-in date</label>
                         <datepicker id="start-date" :disabled-dates = "{ranges: booked_dates}" v-model="booking.start_date" :inline="true"
                                     :highlighted="{from:booking.start_date, to: booking.end_date}" name="start_date" format="yyyy/MM/dd"
                                     :bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar"></datepicker>
                     </div>
                     <div class="form-group col-6">
-                        <label for="end-date">Check Out date</label>
+                        <label for="end-date">Check-out date</label>
                         <datepicker id="end-date" :disabled-dates = "{ranges: booked_dates, to: minDate, from: maxDate}" v-model="booking.end_date"
                                     :inline =true :highlighted="{from:booking.start_date, to: booking.end_date}" name="end_date"  format="yyyy/MM/dd"
                                     :bootstrap-styling=true required calendar-button calendar-button-icon="oi oi-calendar" ></datepicker>
