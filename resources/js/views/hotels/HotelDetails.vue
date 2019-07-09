@@ -61,11 +61,15 @@
 <script>
     export default {
         props: {
-            'hotel': Object
+            'hotelProp': {
+                type: Object,
+                default: undefined
+            }
         },
         data() {
             return {
-                previewUrl: ''
+                hotel: this.hotelProp,
+                uploadedImageUrl: undefined
             }
         },
         mounted(){
@@ -105,14 +109,14 @@
                 const reader = new FileReader();
                 const that = this;
                 reader.onload = function (e) {
-                    that.previewUrl = e.target.result
+                    that.uploadedImageUrl = e.target.result
                 };
                 reader.readAsDataURL(file)
             }
         },
-        watch: {
-            hotel: function (hotel){
-                this.previewUrl = `/hotels/images/${hotel.image_name}`
+        computed: {
+            previewUrl() {
+                return this.uploadedImageUrl || this.hotel.image_url;
             }
         }
     }
