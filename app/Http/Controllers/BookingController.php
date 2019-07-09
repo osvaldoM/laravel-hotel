@@ -63,7 +63,7 @@ class BookingController extends Controller
             return response()->json($errorMessage, 500);
         }
 
-        $conflicting_bookings = get_conflicting_bookings($start_date, $end_date);
+        $conflicting_bookings = $this->get_conflicting_bookings($start_date, $end_date);
 
         if(!$conflicting_bookings->isEmpty()) {
             $errorMessage = array(
