@@ -37,11 +37,15 @@
 <script>
     export default {
         props: {
-            'room': Object
+            'roomProp': {
+                type: Object,
+                default: undefined
+            }
         },
         data() {
             return {
-                previewUrl: '',
+                room: this.roomProp,
+                uploadedImageUrl: undefined,
                 roomTypes: []
             }
         },
@@ -84,14 +88,14 @@
                 const reader = new FileReader();
                 const that = this;
                 reader.onload = function (e) {
-                    that.previewUrl = e.target.result
+                    that.uploadedImageUrl = e.target.result
                 };
                 reader.readAsDataURL(file)
             }
         },
-        watch: {
-            room: function (room){
-                this.previewUrl = `/rooms/images/${room.image_name}`
+        computed: {
+            previewUrl() {
+                return this.uploadedImageUrl || this.room.image_url;
             }
         }
     }
