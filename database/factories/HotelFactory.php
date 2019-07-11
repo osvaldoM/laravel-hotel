@@ -6,9 +6,9 @@ use App\Hotel;
 use Faker\Generator as Faker;
 
 $factory->state(Hotel::class, 'seeding', function (Faker $faker) {
-    $storage_path = Storage::disk()->getAdapter()->getPathPrefix() ;
+    $storage_path = Storage::disk()->getAdapter()->getPathPrefix();
     return [
-        'image_name' => $faker->file(storage_path('app/default_images'), $storage_path . 'app/images/hotels', false)
+        'image_name' => $faker->file(storage_path('app/default_images'), $storage_path . 'images/hotels', false)
     ];
 });
 

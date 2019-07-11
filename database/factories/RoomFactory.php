@@ -29,6 +29,6 @@ $factory->define(Room::class, function (Faker $faker) {
 $factory->state(Room::class, 'seeding', function (Faker $faker) {
     $storage_path = Storage::disk()->getAdapter()->getPathPrefix() ;
     return [
-        'image' => $faker->file(storage_path('app/default_images'), $storage_path . 'app/images/rooms', false)
+        'image' => $faker->file(storage_path('app/default_images'), $storage_path . 'images/rooms', false)
     ];
 });

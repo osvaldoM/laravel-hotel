@@ -18,8 +18,7 @@ class HotelTest extends TestCase
      */
     public function it_can_create_a_hotel()
     {
-        $images_folder_path = 'app/images/hotels/';
-
+        $images_folder_path = 'images/hotels/';
         $fake_hotel_data = factory(Hotel::class)->make()->toArray();
         $image_to_upload = UploadedFile::fake()->image('');
         $file_name = $image_to_upload->hashName();

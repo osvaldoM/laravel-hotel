@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Room;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,7 +18,7 @@ class RoomTest extends TestCase
      */
     public function it_can_create_a_room()
     {
-        $images_folder_path = 'app/images/rooms/';
+        $images_folder_path = 'images/rooms/';
         $fake_room_data = factory(Room::class)->make()->toArray();
 
         $image_to_upload = UploadedFile::fake()->image('');
@@ -26,6 +27,7 @@ class RoomTest extends TestCase
         $this->post(route('rooms.store'), array_merge($fake_room_data, ['image' => $image_to_upload]))
             ->assertStatus(201)
             ->assertJson($fake_room_data);
+        Storage::disk('local')->assertExists("$images_folder_path$file_name");
     }
 
     /**

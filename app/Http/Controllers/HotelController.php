@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class HotelController extends Controller
 {
 
-    private $images_folder_path = 'app/images/hotels/';
+    private $images_folder_path = 'images/hotels/';
     /**
      * Display a listing of the resource.
      *
@@ -123,6 +123,6 @@ class HotelController extends Controller
     }
 
     public function showImage($image_name) {
-        return Storage::download("$this->images_folder_path$image_name");
+        return Storage::disk('local')->download("$this->images_folder_path$image_name");
     }
 }

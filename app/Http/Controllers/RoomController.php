@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
-    private $images_folder_path = 'app/images/rooms/';
+    private $images_folder_path = 'images/rooms/';
     /**
      * Display a listing of the resource.
      *
