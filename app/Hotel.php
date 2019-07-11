@@ -20,9 +20,7 @@ class Hotel extends Model
     protected $appends = ['image_url'];
     protected $hidden = ['image_name'];
 
-    private $image_url;
-
     public function getImageUrlAttribute() {
-        return '/hotels/images/' . $this->attributes['image_name'];
+        return route('hotels.image', $this->attributes['image_name']);
     }
 }

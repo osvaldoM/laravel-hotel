@@ -34,11 +34,11 @@
                     <input name="zip_code" type="text" class="form-control" id="hotel-zip-code" placeholder="Hotel Zip code" v-model="hotel.zip_code">
                 </div>
                 <div class="form-group">
-                    <label for="hotel-phone_number"></label>
+                    <label for="hotel-phone_number">Phone</label>
                     <input name="phone_number" type="text" class="form-control" id="hotel-phone_number" placeholder="Hotel Phone number" v-model="hotel.phone_number">
                 </div>
                 <div class="form-group">
-                    <label for="hotel-email"></label>
+                    <label for="hotel-email">Email</label>
                     <input name="email" type="text" class="form-control" id="hotel-email" placeholder="Hotel email address" v-model="hotel.email">
                 </div>
                 <div class="form-group">

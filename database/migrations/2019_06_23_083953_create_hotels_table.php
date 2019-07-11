@@ -24,7 +24,7 @@ class CreateHotelsTable extends Migration
             $table->string('zip_code');
             $table->string('phone_number');
             $table->string('email');
-            $table->string('image');
+            $table->string('image')->nullable();
         });
     }
 
