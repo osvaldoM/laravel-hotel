@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
-    private $images_folder_path = 'images/rooms/';
+    private $images_folder_path = 'app/images/rooms/';
     /**
      * Display a listing of the resource.
      *
@@ -42,22 +42,18 @@ class RoomController extends Controller
 
         $request->validate([
             'name' => 'nullable|string',
-            'image_name' => 'nullable|string',
             'image' => 'nullable|file',
             'room_type_id' => 'required|numeric',
-            'room_id' => 'nullable|numeric',
+            'hotel_id' => 'required|numeric',
         ]);
         if(!empty($request->image)) {
             $file = $request->file('image');
             $filename = $file->hashName();
 
-            $file->storeAs($this->images_folder_path, $filename);
+            Storage::disk('local')->put( $this->images_folder_path, $file);
+
             $request_data['image_name'] = $filename;
         }
-        if(empty($request->hotel_id)) {
-            $request_data['hotel_id'] = Hotel::firstOrFail()->id;
-        }
-
         return Room::create($request_data, 201);
     }
 

@@ -17,7 +17,7 @@ class CreateRoomsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('name');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->unsignedBigInteger('hotel_id');
             $table->unsignedBigInteger('room_type_id');
             $table->unsignedBigInteger('room_capacity_id');

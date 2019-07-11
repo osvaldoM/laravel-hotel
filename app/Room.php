@@ -13,6 +13,13 @@ class Room extends Model
         'image_name'
     ];
 
+    protected $appends = ['image_url'];
+    protected $hidden = ['image_name'];
+
+    public function getImageUrlAttribute() {
+        return route('rooms.image', $this->attributes['image_name']);
+    }
+
     public function roomType() {
         return $this->belongsTo(RoomType::class, 'room_type_id');
     }

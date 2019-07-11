@@ -20,7 +20,7 @@ class HotelTest extends TestCase
     {
         $images_folder_path = 'app/images/hotels/';
 
-        $fake_hotel_data = factory(Hotel::class)->make()->makeHidden('image_url')->toArray();
+        $fake_hotel_data = factory(Hotel::class)->make()->toArray();
         $image_to_upload = UploadedFile::fake()->image('');
         $file_name = $image_to_upload->hashName();
         $fake_hotel_data['image_url'] = route('hotels.image', $file_name);

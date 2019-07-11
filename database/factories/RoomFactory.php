@@ -9,10 +9,10 @@ use Faker\Generator as Faker;
 $factory->define(Room::class, function (Faker $faker) {
     return [
         'name' => $this->faker->regexify('[A-Z]+[0-9]'),
-        'image_name' => $this->faker->word . '.' . $this->faker->randomElement(['jpg', 'png', 'jpeg', 'bmp', 'gif', 'gif', 'svg']),
+        'image_name' => '',
         'hotel_id' => function () {
             // we don't need more than one hotel in the DB , so we get the first record if it exists or create a new one;
-            $hotel = \App\Hotel::firstOrCreate([], factory(\App\Hotel::class)->state('seeding')->make()->toArray());
+            $hotel = \App\Hotel::firstOrCreate([], factory(\App\Hotel::class)->make()->makeHidden('image_url')->toArray());
 
             return $hotel->id;
         },
@@ -23,5 +23,12 @@ $factory->define(Room::class, function (Faker $faker) {
 
             return $room_type->id;
         }
+    ];
+});
+
+$factory->state(Room::class, 'seeding', function (Faker $faker) {
+    $storage_path = Storage::disk()->getAdapter()->getPathPrefix() ;
+    return [
+        'image' => $faker->file(storage_path('app/default_images'), $storage_path . 'app/images/rooms', false)
     ];
 });

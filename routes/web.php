@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/hotels/images/{imagename}', 'HotelController@showImage')->name('hotel_image');
-Route::get('/rooms/images/{imagename}', 'RoomController@showImage')->name('hotel_image');
+Route::get('/hotels/images/{imagename}', 'HotelController@showImage')->name('hotels.image');
+Route::get('/rooms/images/{imagename}', 'RoomController@showImage')->name('rooms.image');
 
 Route::any('/{any}', 'HomeController@index')->where('any', '.*');
