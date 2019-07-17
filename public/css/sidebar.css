@@ -50,3 +50,6 @@ body {
 .expand-toggler.hidden {
     display: none;
 }
+.sidebar-heading .menu-toggle {
+    display: flex;
+}

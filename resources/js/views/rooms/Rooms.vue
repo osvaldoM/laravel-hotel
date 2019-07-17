@@ -4,7 +4,7 @@
         <hr/>
         <div class="rooms" >
             <div class="text-sm-right add-item">
-                <router-link :to="{name:'roomCreate'}" class="btn btn-primary"><span class="oi oi-plus"></span></router-link>
+                <router-link :to="{name:'roomCreate'}" class="btn btn-primary"><i class="material-icons">add</i></router-link>
             </div>
             <table class="table">
                 <thead class="thead-dark">
@@ -19,8 +19,8 @@
                     <th scope="row">{{room.id}}</th>
                     <td>{{room.name}}</td>
                     <td class="text-sm-right">
-                        <router-link :to="{name:'roomDetails', params: {id: room.id, room: room}}" class="btn btn-secondary"><span class="oi oi-pencil"></span></router-link>
-                        <button class="btn btn-danger" v-on:click="confirmRoomDeletion(room, index)"> <span class="oi oi-delete"></span> </button>
+                        <router-link :to="{name:'roomDetails', params: {id: room.id, room: room}}" class="btn btn-secondary"><i class="material-icons">edit</i></router-link>
+                        <button class="btn btn-danger" v-on:click="confirmRoomDeletion(room, index)"> <i class="material-icons">delete</i></button>
                     </td>
                 </tr>
                 </tbody>

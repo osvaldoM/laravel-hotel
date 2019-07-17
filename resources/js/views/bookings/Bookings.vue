@@ -4,7 +4,7 @@
         <hr/>
         <div class="bookings" >
             <div class="text-sm-right add-item">
-                <router-link :to="{name:'bookingCreate'}" class="btn btn-primary"><span class="oi oi-plus"></span></router-link>
+                <router-link :to="{name:'bookingCreate'}" class="btn btn-primary"><i class="material-icons">add</i></router-link>
             </div>
             <table class="table">
                 <thead class="thead-dark">
@@ -23,8 +23,8 @@
                     <td>{{booking.start_date | formatDate}}</td>
                     <td>{{booking.end_date | formatDate}}</td>
                     <td class="text-sm-right">
-                        <router-link :to="{name:'bookingDetails', params: {id: booking.id, booking: booking}}" class="btn btn-secondary"><span class="oi oi-pencil"></span></router-link>
-                        <button class="btn btn-danger" v-on:click="confirmBookingDeletion(booking, index)"> <span class="oi oi-delete"></span> </button>
+                        <router-link :to="{name:'bookingDetails', params: {id: booking.id, booking: booking}}" class="btn btn-secondary"><i class="material-icons">edit</i></router-link>
+                        <button class="btn btn-danger" v-on:click="confirmBookingDeletion(booking, index)"> <i class="material-icons">delete</i> </button>
                     </td>
                 </tr>
                 </tbody>
