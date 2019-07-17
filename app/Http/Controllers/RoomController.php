@@ -42,9 +42,9 @@ class RoomController extends Controller
 
         $request->validate([
             'name' => 'nullable|string',
-            'image' => 'nullable|file',
+            'image' => 'required|file',
             'room_type_id' => 'required|numeric',
-            'hotel_id' => 'required|numeric',
+            'hotel_id' => 'nullanle|numeric',
         ]);
         if(!empty($request->image)) {
             $file = $request->file('image');
@@ -54,6 +54,7 @@ class RoomController extends Controller
 
             $request_data['image_name'] = $filename;
         }
+        $request_data['hotel_id'] = $request_data['hotel_id'] ?? Hotel::firstOrCreate([], [])->id;
         return Room::create($request_data, 201);
     }
 
@@ -90,7 +91,6 @@ class RoomController extends Controller
     {
         $request->validate([
             'name' => 'nullable|string',
-            'image_name' => 'nullable|string',
             'image' => 'nullable|file',
             'room_type_id' => 'nullable|numeric',
             'room_id' => 'nullable|numeric',

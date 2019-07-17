@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 > Room details </h1>
+        <h1 > Add Room </h1>
         <hr/>
         <div class="room-details">
 

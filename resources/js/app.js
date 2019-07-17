@@ -60,7 +60,7 @@ const router = new VueRouter({
             component: RoomType
         },
         {
-            path: '/room-types/new',
+            path: '/room-types/create',
             name: 'roomTypeCreate',
             component: RoomTypeCreate
         },
@@ -76,7 +76,7 @@ const router = new VueRouter({
             component: Room
         },
         {
-            path: '/rooms/new',
+            path: '/rooms/create',
             name: 'roomCreate',
             component: RoomCreate
         },
@@ -91,7 +91,7 @@ const router = new VueRouter({
             component: Booking
         },
         {
-            path: '/bookings/new',
+            path: '/bookings/create',
             name: 'bookingCreate',
             component: BookingCreate
         },
