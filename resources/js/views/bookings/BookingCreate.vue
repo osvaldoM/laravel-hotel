@@ -38,7 +38,7 @@
                 </div>
 
                 <p>Number of nights: {{numberOfNights}}</p>
-                <p>Total: {{getTotal}} $</p>
+                <p>Total: {{getTotal | formatAsMoney}}</p>
                 <button type="submit" class="btn btn-primary">Add booking</button>
             </form>
         </div>

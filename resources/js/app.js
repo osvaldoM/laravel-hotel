@@ -7,12 +7,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+require('./filters');
 
 import VueRouter from 'vue-router'
 
 import Toasted from 'vue-toasted';
-
-import moment from 'moment'
 
 Vue.use(VueRouter);
 Vue.use(Toasted, {
@@ -41,12 +40,6 @@ Vue.toasted.register('save_success', (payload) => {
     type: 'success',
     icon: 'check',
     duration: 5000
-});
-
-Vue.filter('formatDate', function (value){
-    if(value){
-        return moment(String(value)).format('YYYY/MM/DD');
-    }
 });
 
 import App from './views/App'
