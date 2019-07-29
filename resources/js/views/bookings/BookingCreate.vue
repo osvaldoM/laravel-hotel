@@ -7,11 +7,13 @@
             <form method="POST" v-bind:action="'/api/v1/bookings/'" v-on:submit="createBooking">
                 <div class="form-group">
                     <label for="customer-full-name">Customer full name</label>
-                    <input required name="customer_full_name" type="text" class="form-control" id="customer-full-name" placeholder="Customer's full name" v-model="booking.customer_full_name">
+                    <input required name="customer_full_name" type="text" class="form-control" id="customer-full-name"
+                           placeholder="Customer's full name" v-model="booking.customer_full_name">
                 </div>
                 <div class="form-group">
                     <label for="customer-email">Customer email</label>
-                    <input required name="customer_email" type="text" class="form-control" id="customer-email" placeholder="Customer's email" v-model="booking.customer_email">
+                    <input required name="customer_email" type="text" class="form-control" id="customer-email" placeholder="Customer's email"
+                           v-model="booking.customer_email">
                 </div>
 
                 <div class="form-group">
@@ -23,15 +25,15 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="start-date">Check-in date</label>
-                        <datepicker id="start-date" :disabled-dates = "{ranges: booked_dates}" v-model="booking.start_date" :inline="true"
+                        <datepicker id="start-date" :disabled-dates="{ranges: booked_dates}" v-model="booking.start_date" :inline="true"
                                     :highlighted="{from:booking.start_date, to: booking.end_date}" name="start_date" format="yyyy/MM/dd"
                                     :bootstrap-styling=true required calendar-button calendar-button-icon="material-icons"
                                     calendar-button-icon-content="event"></datepicker>
                     </div>
                     <div class="form-group col-6">
                         <label for="end-date">Check-out date</label>
-                        <datepicker id="end-date" :disabled-dates = "{ranges: booked_dates, to: minDate, from: maxDate}" v-model="booking.end_date"
-                                    :inline =true :highlighted="{from:booking.start_date, to: booking.end_date}" name="end_date"  format="yyyy/MM/dd"
+                        <datepicker id="end-date" :disabled-dates="{ranges: booked_dates, to: minDate, from: maxDate}" v-model="booking.end_date"
+                                    :inline=true :highlighted="{from:booking.start_date, to: booking.end_date}" name="end_date" format="yyyy/MM/dd"
                                     :bootstrap-styling=true required calendar-button calendar-button-icon="material-icons"
                                     calendar-button-icon-content="event"></datepicker>
                     </div>
@@ -48,11 +50,12 @@
 <script>
     import Datepicker from 'vuejs-datepicker';
     import moment from 'moment'
+
     export default {
         components: {
             Datepicker
         },
-        data() {
+        data(){
             return {
                 rooms: [],
                 room: undefined,
@@ -78,17 +81,16 @@
 
                     if(res.data.id){
                         this.$toasted.global.save_success({entity: 'Booking'});
-                        this.$router.push({ name:'bookingDetails', params: {id: res.data.id, booking: res.data }});
-                    }
-                    else
+                        this.$router.push({name: 'bookingDetails', params: {id: res.data.id, booking: res.data}});
+                    } else
                         throw new Error('invalid response');
                 })
                     .catch((error) => {
-                        this.$toasted.global.save_error({entity: 'Booking'});
+                        this.$toasted.global.save_error({message: (error.response ? error.response.data.message : error.message)});
                     })
             },
             daysBetween: function (start_date, end_date){
-                return  Math.abs(moment(start_date).diff(moment(end_date), 'days'));
+                return Math.abs(moment(start_date).diff(moment(end_date), 'days'));
             },
         },
         watch: {
@@ -96,7 +98,7 @@
                 return axios.get(`/api/v1/rooms/${roomId}/room_info`).then(res => {
                     let bookedDates = res.data.booked_dates.map((val) => {
                         return {
-                            from : new Date(val.start_date),
+                            from: new Date(val.start_date),
                             to: new Date(val.end_date)
                         };
                     });
@@ -104,37 +106,37 @@
                     this.room = res.data.room_info
                 })
             },
-            'booking.start_date': function ( start_date){
+            'booking.start_date': function (start_date){
                 if(this.booking.end_date && this.room && this.room.room_type && this.room.room_type.pricing){
-                    const minDate =  moment(start_date).add(this.room.room_type.pricing.min_stay_length, 'days');
+                    const minDate = moment(start_date).add(this.room.room_type.pricing.min_stay_length, 'days');
                     const endDate = moment(this.booking.end_date);
                     const isValidDate = endDate.isAfter(minDate);
 
-                    if(!isValidDate) {
+                    if(!isValidDate){
                         this.booking.end_date = minDate.toDate();
                     }
                 }
             }
         },
         computed: {
-            minDate : function (){
+            minDate: function (){
                 if(this.booking.start_date && this.room && this.room.room_type && this.room.room_type.pricing){
-                    const minDate =  moment(this.booking.start_date).add(this.room.room_type.pricing.min_stay_length, 'days').toDate();
+                    const minDate = moment(this.booking.start_date).add(this.room.room_type.pricing.min_stay_length, 'days').toDate();
                     return minDate;
                 }
             },
-            maxDate : function (){
+            maxDate: function (){
                 if(this.booking.start_date && this.room && this.room.room_type && this.room.room_type.pricing){
-                    const maxDate =  moment(this.booking.start_date).add(this.room.room_type.pricing.max_stay_length, 'days').toDate();
+                    const maxDate = moment(this.booking.start_date).add(this.room.room_type.pricing.max_stay_length, 'days').toDate();
                     return maxDate;
                 }
             },
-            numberOfNights: function(){
+            numberOfNights: function (){
                 if(this.booking.start_date && this.booking.end_date){
                     const diff = this.daysBetween(this.booking.start_date, this.booking.end_date);
-                        if(!diff) {
-                            return 'same day checkout';
-                        }
+                    if(!diff){
+                        return 'same day checkout';
+                    }
                     return `${diff} nights`;
                 }
             },

@@ -19,7 +19,7 @@ Vue.use(Toasted, {
 });
 Vue.toasted.register('save_error', (payload) => {
     if(payload.message){
-        return message;
+        return payload.message;
     }
     if(payload.entity){
         return `error saving ${payload.entity}`;

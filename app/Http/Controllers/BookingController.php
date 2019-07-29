@@ -68,7 +68,7 @@ class BookingController extends Controller
         if(!$conflicting_bookings->isEmpty()) {
             $errorMessage = array(
                 'status' => 'error',
-                'message' => 'Attempting to book room in occupied dates!'
+                'message' => 'Attempting to book room on occupied dates!'
             );
             return response()->json($errorMessage, 500);
         }
@@ -139,7 +139,7 @@ class BookingController extends Controller
         if(!$conflicting_bookings_without_current_booking->isEmpty()) {
             $errorMessage = array(
                 'status' => 'error',
-                'message' => 'Attempting to book room in occupied dates!'
+                'message' => 'Attempting to book room on occupied dates!'
             );
             return response()->json($errorMessage, 500);
         }
