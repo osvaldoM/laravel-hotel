@@ -9,7 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router'
-// register the plugin on vue
+
 import Toasted from 'vue-toasted';
 
 import moment from 'moment'
@@ -18,9 +18,33 @@ Vue.use(VueRouter);
 Vue.use(Toasted, {
     router: VueRouter
 });
+Vue.toasted.register('save_error', (payload) => {
+    if(payload.message){
+        return message;
+    }
+    if(payload.entity){
+        return `error saving ${payload.entity}`;
+    }
+    return 'Oops.. Something Went Wrong..';
+}, {
+    type: 'error',
+    icon: 'error_outline',
+    duration: 5000
+});
 
-Vue.filter('formatDate', function(value) {
-    if (value) {
+Vue.toasted.register('save_success', (payload) => {
+    if(payload.entity){
+        return `${payload.entity} created`;
+    }
+    return 'Saved !';
+}, {
+    type: 'success',
+    icon: 'check',
+    duration: 5000
+});
+
+Vue.filter('formatDate', function (value){
+    if(value){
         return moment(String(value)).format('YYYY/MM/DD');
     }
 });
@@ -110,25 +134,25 @@ const router = new VueRouter({
  */
 const app = new Vue({
     el: '#app',
-    components: { App,},
+    components: {App,},
     router,
 });
 
 
 // ensure file input name is updated
-$(document).on('change', '.custom-file-input', function(){
+$(document).on('change', '.custom-file-input', function (){
     let fileName = $(this).val().split('\\').pop();
     $(this).next('.custom-file-label').html(fileName);
 });
 // Menu Toggle
-$(".menu-toggle").on('click', function(e) {
+$(".menu-toggle").on('click', function (e){
     e.preventDefault();
     e.stopImmediatePropagation();
     $('.wrapper').toggleClass("toggled");
     $('.expand-toggler').toggleClass('hidden');
 });
 
-//some hackery to use vue router outside the context of a vue application
+//hackery to use vue router outside the context of a vue application
 window.router = router;
 $('.list-group-item').on('click', (event) => {
     event.preventDefault();

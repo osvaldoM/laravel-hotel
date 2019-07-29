@@ -89,13 +89,10 @@
                 let formData = new FormData(form);
 
                axios.post(form.getAttribute('action'), formData).then( res => {
-                   this.$toasted.show('Hotel details updated', {
-                       duration: 5000,
-                       type: 'success'
-                   });
+                   this.$toasted.global.save_success({entity: 'Hotel'});
                })
                    .catch((error) => {
-                       this.toasted.show('Error updating Hotel');
+                       this.$toasted.global.save_error({entity: 'Hotel'});
                    })
             },
             previewImage: function (event) {

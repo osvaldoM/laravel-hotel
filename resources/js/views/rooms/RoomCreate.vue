@@ -59,14 +59,11 @@
                 let formData = new FormData(form);
 
                axios.post(form.getAttribute('action'), formData).then( res => {
-                   this.$toasted.show('Room created', {
-                       duration: 5000,
-                       type: 'success'
-                   });
+                   this.$toasted.global.save_success({entity: 'Room'});
                    this.$router.push({ name:'roomDetails', params: {id: res.data.id, room: res.data }});
                })
                    .catch((error) => {
-                       this.$toasted.show('Error adding Room');
+                       this.$toasted.global.save_error({entity: 'Room'});
                    })
             },
             previewImage: function (event) {

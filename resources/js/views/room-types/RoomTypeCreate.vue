@@ -35,14 +35,11 @@
                 let formData = new FormData(form);
 
                 axios.post(form.getAttribute('action'), formData).then(res => {
-                    this.$toasted.show('Room type created', {
-                        duration: 5000,
-                        type: 'success'
-                    });
+                    this.$toasted.global.save_success({entity: 'Room type'});
                     this.$router.push({ name:'roomTypeDetails', params: {id: res.data.id, roomType: res.data }});
                 })
                     .catch((error) => {
-                        this.$toasted.show('Error updating Room type' + error.message);
+                        this.$toasted.global.save_error({entity: 'Room type'});
                     })
             }
         }

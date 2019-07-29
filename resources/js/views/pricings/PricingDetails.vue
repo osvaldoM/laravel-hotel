@@ -60,13 +60,10 @@
                 let formData = new FormData(form);
 
                 axios.post(form.getAttribute('action'), formData).then(res => {
-                    this.$toasted.show('Room type pricing details updated', {
-                        duration: 5000,
-                        type: 'success'
-                    });
+                    this.$toasted.global.save_success({entity: 'Pricing'});
                 })
                     .catch((error) => {
-                        this.$toasted.show('Error updating Room type');
+                        this.$toasted.global.save_error({entity: 'Pricing'});
                     })
             }
         }

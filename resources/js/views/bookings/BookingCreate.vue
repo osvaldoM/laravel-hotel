@@ -75,20 +75,14 @@
                 axios.post(form.getAttribute('action'), formData).then(res => {
 
                     if(res.data.id){
-                        this.$toasted.show('Booking created', {
-                            duration: 3000,
-                            type: 'success'
-                        });
+                        this.$toasted.global.save_success({entity: 'Booking'});
                         this.$router.push({ name:'bookingDetails', params: {id: res.data.id, booking: res.data }});
                     }
                     else
                         throw new Error('invalid response');
                 })
                     .catch((error) => {
-                        this.$toasted.show('Error updating Booking' + error.message, {
-                            duration: 3000,
-                            type: 'error'
-                        });
+                        this.$toasted.global.save_error({entity: 'Booking'});
                     })
             },
             daysBetween: function (start_date, end_date){
