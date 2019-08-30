@@ -3,6 +3,13 @@
         <h1> Bookings </h1>
         <hr/>
         <div class="bookings" >
+            <div class="form-group col-6">
+                <label for="end-date">Check-out date</label>
+                <datepicker id="end-date" :highlighted="{customPredictor: isBookedDate(bookedDates)}" v-model="date_filter"
+                            :inline=true  name="date_filter" format="yyyy/MM/dd"
+                            :bootstrap-styling=true required calendar-button calendar-button-icon="material-icons"
+                            calendar-button-icon-content="event"></datepicker>
+            </div>
             <div class="text-sm-right add-item">
                 <router-link :to="{name:'bookingCreate'}" class="btn btn-primary"><i class="material-icons">add</i></router-link>
             </div>
@@ -34,10 +41,34 @@
 </template>
 
 <script>
+    import Datepicker from 'vuejs-datepicker';
+    import moment from 'moment'
+
+    const getBookedDates = (bookings) => {
+        return bookings.map((booking) => {
+            return {
+                from: new Date(booking.start_date),
+                to: new Date(booking.end_date)
+            };
+        });
+    };
+
+    const isBookedDate = (bookedDates) => {
+        return (date) => {
+            return bookedDates.some((bookedDate) => {
+                return moment(date).isBetween(bookedDate.from, bookedDate.to, null, '[]');
+            });
+        };
+    };
     export default {
+        components: {
+            Datepicker
+        },
         data() {
             return {
-                bookings: []
+                bookings: [],
+                bookedDates: [],
+                date_filter: new Date()
             }
         },
         mounted() {
@@ -48,6 +79,7 @@
                 axios.get('/api/v1/bookings')
                     .then( res => {
                         this.bookings = res.data;
+                        this.bookedDates = getBookedDates(res.data);
                     })
             },
             confirmBookingDeletion: function (booking, index){
@@ -77,7 +109,8 @@
                         type: 'error'
                     });
                 })
-            }
+            },
+            isBookedDate
         }
     }
 </script>
