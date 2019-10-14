@@ -8,6 +8,7 @@
                 <datepicker id="end-date" :highlighted="{customPredictor: isBookedDate(bookedDates)}" v-model="date_filter"
                             :inline=true  name="date_filter" format="yyyy/MM/dd"
                             :bootstrap-styling=true required calendar-button calendar-button-icon="material-icons"
+                            @selected="displayBookingInfo"
                             calendar-button-icon-content="event"></datepicker>
             </div>
             <div class="text-sm-right add-item">
@@ -109,6 +110,12 @@
                         type: 'error'
                     });
                 })
+            },
+            displayBookingInfo: function(date) {
+                axios.get(`/api/v1/bookings/by_date/${parseInt(date.getTime()/1000)}`) // send timestamp in seconds
+                    .then( res => {
+                        console.log(res);
+                    })
             },
             isBookedDate
         }

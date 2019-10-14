@@ -172,7 +172,7 @@ class BookingController extends Controller
     }
 
 
-    public  function get_booking_on_date($time) {
+    public  function get_bookings_on_date($time) {
         $date = Carbon::createFromTimestamp($time)->toDateTimeString();
         return DB::table('bookings')
             ->whereRaw('? BETWEEN start_date AND end_date', [$date])->get();

@@ -25,7 +25,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::resource('rooms', RoomController::class);
     Route::resource('pricings', PricingController::class);
     Route::resource('bookings', BookingController::class);
-    Route::get('/bookings/by_date/{time}', 'BookingController@get_booking_on_date')->name('bookings.by_date');
+    Route::get('/bookings/by_date/{time}', 'BookingController@get_bookings_on_date')->name('bookings.by_date');
 
     Route::get('/room_types/{room_type}/pricing', 'RoomTypeController@pricing');
 
