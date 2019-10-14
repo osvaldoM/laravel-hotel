@@ -167,7 +167,14 @@ class BookingController extends Controller
     private function get_conflicting_bookings($start_date, $end_date) {
         return DB::table('bookings')
             ->whereBetween('start_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
-            ->orWhereBetween('end_date', [$start_date->addDays()->toDateTimeString(), $end_date->addDays()->toDateTimeString()])
+            ->orWhereBetween('end_date', [$start_date->addDays()->toDateTimeStri(), $end_date->addDays()->toDateTimeString()])
             ->get();
+    }
+
+
+    public  function get_booking_on_date($time) {
+        $date = Carbon::createFromTimestamp($time)->toDateTimeString();
+        return DB::table('bookings')
+            ->whereRaw('? BETWEEN start_date AND end_date', [$date])->get();
     }
 }

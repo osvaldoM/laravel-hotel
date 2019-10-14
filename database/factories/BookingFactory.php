@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Booking::class, function (Faker $faker) {
     return [
         'room_id' => function() {
-            $room = \App\Room::firstOrCreate([], factory(\App\Room::class)->make()->toArray());
+            $room = \App\Room::firstOrCreate([], factory(\App\Room::class)->make()->makeHidden('image_url')->toArray());
 
             return $room->id;
         },

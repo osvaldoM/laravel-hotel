@@ -68,4 +68,25 @@ class BookingTest extends TestCase
         $this->assertDatabaseMissing('bookings', ['id' => $fake_booking->id]);
     }
 
+    /**
+     * get booking by date Test.
+     * @test
+     * @return void
+     */
+    public function it_can_show_a_booking_on_a_date() {
+        $fake_bookings = factory(Booking::class, 3)->create();
+        $random_booking_index = array_rand($fake_bookings->toArray());
+        $random_booking = $fake_bookings->get($random_booking_index);
+        $random_date = random_date_in_range(strtotime($random_booking->start_date), strtotime($random_booking->end_date));
+        $this->get(route('bookings.by_date', ['date'=> $random_date->getTimestamp()]))
+            ->assertJsonFragment($random_booking->toArray())
+            ->assertStatus(200);
+    }
+}
+
+function random_date_in_range(int $start_time, int $end_time) {
+    $randomTimestamp = mt_rand($start_time, $end_time);
+    $randomDate = new \DateTime();
+    $randomDate->setTimestamp($randomTimestamp);
+    return $randomDate;
 }
